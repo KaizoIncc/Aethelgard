@@ -1,6 +1,7 @@
 #ifndef TRANSACTION_H
 #define TRANSACTION_H
 
+#include "Utils.hpp"
 #include <string>
 #include <vector>
 #include <ctime>
@@ -16,6 +17,7 @@ private:
     double amount;
     string data;
     time_t timestamp;
+    string signature;
 
 public:
     /**
@@ -79,6 +81,13 @@ public:
      * @return The `timestamp` member variable of the `Transaction` class is being returned.
      */
     time_t getTimestamp() const;
+
+    /**
+     * The function `getSignature` returns the signature of a transaction.
+     * 
+     * @return The `signature` string is being returned.
+     */
+    string getSignature() const;
     
     /**
      * The function `calculateHash` calculates the SHA-256 hash of the transaction data and stores
@@ -106,6 +115,27 @@ public:
      */
     string toString() const;
     
+    /**
+     * The `sign` function signs a transaction using a private key after validating it and
+     * calculating the hash.
+     * 
+     * @param privateKey The `privateKey` parameter is a string that represents the private key used for
+     * signing the transaction. It is passed to the `sign` method of the `Transaction` class to sign the
+     * transaction data.
+     * 
+     * @return The `sign` method returns a boolean value. It returns `true` if the signature is
+     * successfully generated and not empty, and `false` otherwise.
+     */
+    bool sign(const string& privateKey);
+    
+    /**
+     * The function `verifySignature` checks if a transaction signature is valid using CryptoUtils.
+     * 
+     * @return The `verifySignature` function is returning a boolean value. It returns `false` if the
+     * `signature` is empty, and otherwise it calls the `CryptoUtils::verifySignature` function with the
+     * `from`, `hash`, and `signature` parameters and returns the result of that function call.
+     */
+    bool verifySignature() const;
 };
 
 #endif // TRANSACTION_H

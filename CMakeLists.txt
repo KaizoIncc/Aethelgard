@@ -3,11 +3,12 @@ project(BlockchainCore)
 
 set(CMAKE_CXX_STANDARD 17)
 
-# Encontrar OpenSSL
-find_package(OpenSSL REQUIRED)
+# Encontrar OpenSSL - versión más específica
+find_package(OpenSSL REQUIRED COMPONENTS Crypto)
 
-# Archivos fuente
+# Archivos fuente (asegúrate de incluir Utils.cpp que contiene CryptoUtils)
 set(SOURCES
+    src/Utils.cpp
     src/Transaction.cpp
     src/BlockHeader.cpp
     src/Block.cpp
@@ -15,12 +16,21 @@ set(SOURCES
 
 # Archivos de cabecera
 set(HEADERS
-    include/Transaction.h
-    include/BlockHeader.h
-    include/Block.h
+    include/Utils.hpp
+    include/Transaction.hpp
+    include/BlockHeader.hpp
+    include/Block.hpp
 )
 
 # Biblioteca principal
 add_library(BlockchainCore ${SOURCES} ${HEADERS})
 target_include_directories(BlockchainCore PUBLIC include)
-target_link_libraries(BlockchainCore OpenSSL::SSL OpenSSL::Crypto)
+
+# Enlazar OpenSSL - versión simplificada y correcta
+target_link_libraries(BlockchainCore OpenSSL::Crypto)
+
+# Opcional: Configuraciones adicionales recomendadas
+set_target_properties(BlockchainCore PROPERTIES
+    CXX_EXTENSIONS OFF
+    POSITION_INDEPENDENT_CODE ON
+)

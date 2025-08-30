@@ -7,12 +7,14 @@ Transaction::Transaction(const string& from, const string& to, double amount, co
     calculateHash();
 }
 
+// Getters
 string Transaction::getHash() const { return hash; }
 string Transaction::getFrom() const { return from; }
 string Transaction::getTo() const { return to; }
 double Transaction::getAmount() const { return amount; }
 string Transaction::getData() const { return data; }
 time_t Transaction::getTimestamp() const { return timestamp; }
+string Transaction::getSignature() const { return signature; }
 
 void Transaction::calculateHash() {
     string data = toString();
@@ -45,4 +47,18 @@ string Transaction::toString() const {
     stringstream ss;
     ss << from << to << amount << data << timestamp;
     return ss.str();
+}
+
+bool Transaction::sign(const std::string& privateKey) {
+    if (!CryptoUtils::isValidPrivateKey(privateKey)) return false;
+    
+    calculateHash(); // Asegurar que el hash esté calculado
+    signature = CryptoUtils::signMessage(privateKey, hash);
+    return !signature.empty();
+}
+
+bool Transaction::verifySignature() const {
+    if (signature.empty()) return false;
+    
+    return CryptoUtils::verifySignature(from, hash, signature);
 }
