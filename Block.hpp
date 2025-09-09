@@ -26,6 +26,10 @@ private:
     string calculateHash(const string& data) const;
 
 public:
+    /**
+     * The Block constructor initializes the header with default values.
+     */
+    Block();
 
     /**
      * The Block constructor initializes a Block object with the given index and previous hash.

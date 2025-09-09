@@ -2,7 +2,12 @@
 #include <sstream>
 #include <iomanip>
 
-Transaction::Transaction(const string& from, const string& to, double amount, const string& data) : from(from), to(to), amount(amount), data(data) {
+/**
+ * The Transaction constructor initializes member variables with default values.
+ */
+Transaction::Transaction() : from(""), to(""), amount(0.0), data(""), timestamp(0), hash(""), signature("") {};
+
+Transaction::Transaction(const string& from, const string& to, double amount, const string& data) : from(from), to(to), amount(amount), data(data), signature("") {
     timestamp = time(nullptr);
     calculateHash();
 }
@@ -16,6 +21,17 @@ string Transaction::getData() const { return data; }
 time_t Transaction::getTimestamp() const { return timestamp; }
 string Transaction::getSignature() const { return signature; }
 
+// Setters
+// Setters
+void Transaction::setHash(const string& hash) { this->hash = hash; }
+void Transaction::setTimestamp(time_t timestamp) { this->timestamp = timestamp; }
+void Transaction::setSignature(const string& signature) { this->signature = signature; }
+void Transaction::setFrom(const string& from) { this->from = from; }
+void Transaction::setTo(const string& to) { this->to = to; }
+void Transaction::setAmount(double amount) { this->amount = amount; }
+void Transaction::setData(const string& data) { this->data = data; }
+
+// Helper Functions
 void Transaction::calculateHash() {
     string data = toString();
     
@@ -49,7 +65,7 @@ string Transaction::toString() const {
     return ss.str();
 }
 
-bool Transaction::sign(const std::string& privateKey) {
+bool Transaction::sign(const string& privateKey) {
     if (!CryptoUtils::isValidPrivateKey(privateKey)) return false;
     
     calculateHash(); // Asegurar que el hash esté calculado
@@ -61,4 +77,8 @@ bool Transaction::verifySignature() const {
     if (signature.empty()) return false;
     
     return CryptoUtils::verifySignature(from, hash, signature);
+}
+
+bool Transaction::involvesAddress(const string& address) const {
+    return (from == address || to == address);
 }

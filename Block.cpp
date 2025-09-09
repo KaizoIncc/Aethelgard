@@ -2,9 +2,9 @@
 #include <iomanip>
 #include <algorithm>
 
+Block::Block() : header(0, "") {};
 
 Block::Block(int64_t index, const string& previousHash) : header(index, previousHash) {}
-
 
 bool Block::addTransaction(const Transaction& transaction) {
     if (!transaction.isValid()) return false;
