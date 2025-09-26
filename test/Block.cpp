@@ -14,8 +14,14 @@ Block::Block(int64_t index, const string& previousHash) : header(index, previous
 
 bool Block::addTransaction(const Transaction& transaction) {
     if (!transaction.isValid()) return false;
-    
     transactions.push_back(transaction);
+    
+    // Recalcular Merkle root y hash del bloque
+    string merkle = calculateMerkleRoot();
+    header.setMerkleRoot(merkle);
+    string h = calculateHash(header.toString());
+    header.setHash(h);
+    
     return true;
 }
 

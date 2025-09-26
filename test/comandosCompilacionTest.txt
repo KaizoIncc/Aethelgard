@@ -1,0 +1,9 @@
+g++ -std=c++17 -pthread testBlockClass.cpp Block.cpp BlockHeader.cpp Transaction.cpp Utils.cpp -lgtest -lgtest_main -lcrypto -Wno-deprecated-declarations -o testBlockClass
+
+g++ -std=c++17 -pthread testIntegratedBlockchain1.cpp BlockHeader.cpp Block.cpp Transaction.cpp BlockchainStorage.cpp Utils.cpp -lgtest -lgtest_main -lcrypto -Wno-deprecated-declarations -o testIntegratedBlockchain1
+
+g++ -std=c++17 -pthread testTransactionClass.cpp Transaction.cpp Utils.cpp -lgtest -lgtest_main -lcrypto -Wno-deprecated-declarations -o testTransactionClass
+
+g++ -std=c++17 -pthread testBlockchainStorageClass.cpp BlockHeader.cpp Block.cpp Transaction.cpp BlockchainStorage.cpp Utils.cpp -lgtest -lgtest_main -lcrypto -Wno-deprecated-declarations -o testBlockchainStorageClass
+
+g++ -std=c++17 -pthread testBlockHeaderClass.cpp BlockHeader.cpp -lgtest -lgtest_main -lcrypto -Wno-deprecated-declarations -o testBlockHeaderClass

@@ -1,6 +1,5 @@
 #include "PeerConnection.hpp"
 #include <iostream>
-#include "Message.hpp"
 
 namespace p2p {
 

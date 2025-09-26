@@ -98,6 +98,9 @@ bool Transaction::sign(const string& privateKey) {
     // Solo permitimos firmar si la dirección coincide con "from"
     if (derivedAddr != from) return false;
 
+    // No permitimos transacciones de loop
+    if (from == to) return false;
+
     calculateHash(); // asegurar que el hash esté actualizado
     signature = CryptoUtils::signMessage(privateKey, hash);
     publicKey = derivedPubKey; // guardamos la pubkey para la verificación

@@ -2,7 +2,7 @@
 #ifndef P2P_PEER_CONNECTION_HPP
 #define P2P_PEER_CONNECTION_HPP
 
-#include "Peer.hpp"
+#include "PeerManager.hpp"
 #include "Message.hpp"
 #include <boost/asio.hpp>
 #include <functional>
