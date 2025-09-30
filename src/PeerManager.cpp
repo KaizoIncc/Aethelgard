@@ -1,7 +1,4 @@
 #include "PeerManager.hpp"
-#include <fstream>
-#include <algorithm>
-#include <iostream>
 
 namespace p2p {
 

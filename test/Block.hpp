@@ -4,6 +4,8 @@
 #include "BlockHeader.hpp"
 #include "Transaction.hpp"
 #include <memory>
+#include <iomanip>
+#include <algorithm>
 
 using namespace std;
 

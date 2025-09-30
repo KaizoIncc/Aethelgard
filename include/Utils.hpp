@@ -292,6 +292,8 @@ public:
      * it returns `false`.
      */
     static bool isValidPublicKey(const string& publicKey);
+
+    static void clearCaches();
     
 private:
     // Helper functions

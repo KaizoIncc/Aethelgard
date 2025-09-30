@@ -1,5 +1,4 @@
 #include "BlockHeader.hpp"
-#include <sstream>
 
 BlockHeader::BlockHeader(int64_t index, const string& previousHash) : index(index), previousHash(previousHash) {
     timestamp = time(nullptr);

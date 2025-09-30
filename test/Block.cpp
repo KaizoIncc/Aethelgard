@@ -1,6 +1,4 @@
 #include "Block.hpp"
-#include <iomanip>
-#include <algorithm>
 
 Block::Block() : header(0, "") {};
 

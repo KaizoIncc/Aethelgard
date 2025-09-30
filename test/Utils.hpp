@@ -1,6 +1,12 @@
 #ifndef CRYPTO_UTILS_H
 #define CRYPTO_UTILS_H
 
+#include <sstream>
+#include <iomanip>
+#include <stdexcept>
+#include <algorithm>
+#include <mutex>
+#include <unordered_map>
 #include <string>
 #include <vector>
 #include <openssl/ec.h>
@@ -10,6 +16,13 @@
 #include <openssl/evp.h>
 #include <openssl/pem.h>
 #include <openssl/ripemd.h>
+#include <openssl/rand.h>
+#include <openssl/bio.h>
+#include <openssl/buffer.h>
+#include <openssl/bn.h>
+#include <memory>
+#include <chrono>
+#include <iostream>
 
 using namespace std;
 
@@ -292,6 +305,27 @@ public:
      * it returns `false`.
      */
     static bool isValidPublicKey(const string& publicKey);
+    
+    /**
+     * The function `clearCaches` clears various caches related to cryptographic key pairs and public keys,
+     * and prints out the number of items freed.
+     */
+    static void clearCaches();
+
+    /**
+     * The function `getCachedPublicKey` retrieves a cached public key from a map or generates a new one if
+     * not found.
+     * 
+     * @param publicKey The `getCachedPublicKey` function takes a vector of unsigned 8-bit integers
+     * (`uint8_t`) named `publicKey` as input. This vector represents the public key in binary form that
+     * will be used to retrieve or generate an EC_KEY object.
+     * 
+     * @return The function `getCachedPublicKey` returns an `EC_KEY*` pointer to the public key
+     * corresponding to the input `publicKey` vector. If the public key is found in the cache, it returns
+     * the cached `EC_KEY*` pointer. If not found in the cache, it constructs the `EC_KEY*` pointer from
+     * the input public key data, caches it, and then returns the
+     */
+    static EC_KEY* getCachedPublicKey(const vector<uint8_t>& publicKey);
     
 private:
     // Helper functions
