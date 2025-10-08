@@ -1,10 +1,13 @@
 #include "P2PNode.hpp"
-#include <iostream>
-#include <chrono>
 
 namespace p2p {
 
-    P2PNode::P2PNode(uint16_t listenPort, uint32_t networkMagic) : io(), acceptor(io, tcp::endpoint(tcp::v4(), listenPort)), magic(networkMagic), port(listenPort), workGuard(boost::asio::make_work_guard(io)) {}
+    P2PNode::P2PNode(uint16_t listenPort, uint32_t networkMagic) 
+        : io(), 
+        acceptor(io, tcp::endpoint(tcp::v4(), listenPort)), 
+        magic(networkMagic), 
+        port(listenPort), 
+        workGuard(boost::asio::make_work_guard(io)) {}
 
     P2PNode::~P2PNode() {
         stop();
@@ -12,28 +15,35 @@ namespace p2p {
 
     void P2PNode::start() {
         if (running) return;
+        
         running = true;
         doAccept();
-        // run io_context in background thread
-        ioThread = thread([this]{ io.run(); });
-        // small scheduler: connect to known peers (non-blocking, can be extended)
-        auto known = peerManager.selectPeersToConnect(8);
-        for (auto &p : known) connectToPeer(p);
+        
+        // Ejecutar io_context en hilo en segundo plano
+        ioThread = thread([this] { io.run(); });
+        
+        // Conectar a peers conocidos (no bloqueante, puede extenderse)
+        auto knownPeers = peerManager.selectPeersToConnect(8);
+        for (auto& peer : knownPeers) {
+            connectToPeer(peer);
+        }
     }
 
     void P2PNode::stop() {
         if (!running) return;
+        
         running = false;
         workGuard.reset();
-        boost::system::error_code ec;
-        acceptor.close(ec);
+        
+        boost::system::error_code errorCode;
+        acceptor.close(errorCode);
 
-        // Close connections
+        // Cerrar conexiones
         {
-            lock_guard<mutex> lk(connMtx);
-            for (auto &kv : connections) {
-                boost::system::error_code e2;
-                kv.second->socket().close(e2);
+            lock_guard<mutex> connectionLock(connMtx);
+            for (auto& [key, connection] : connections) {
+                boost::system::error_code closeError;
+                connection->socket().close(closeError);
             }
             connections.clear();
         }
@@ -42,55 +52,68 @@ namespace p2p {
         if (ioThread.joinable()) ioThread.join();
     }
 
-    void P2PNode::addBootstrapPeer(const PeerInfo& p) {
-        peerManager.addKnownPeer(p);
+    void P2PNode::addBootstrapPeer(const PeerInfo& peer) {
+        peerManager.addKnownPeer(peer);
     }
 
-    void P2PNode::broadcastMessage(const Message& msg) {
-        lock_guard<mutex> lk(connMtx);
-        for (auto &kv : connections) {
+    void P2PNode::broadcastMessage(const Message& message) {
+        lock_guard<mutex> connectionLock(connMtx);
+        for (auto& [key, connection] : connections) {
             try {
-                kv.second->sendMessage(msg);
-            } catch (...) {}
+                connection->sendMessage(message);
+            } catch (...) {
+                // Ignorar errores de envío
+            }
         }
     }
 
-    void P2PNode::connectToPeer(const PeerInfo& p) {
-        auto conn = make_shared<PeerConnection>(io);
-        conn->setMessageHandler([this](const PeerInfo& peer, const Message& m){
-            // forward to application handler
-            if (onMessage) onMessage(peer, m);
+    void P2PNode::connectToPeer(const PeerInfo& peer) {
+        auto connection = make_shared<PeerConnection>(io);
+        
+        connection->setMessageHandler([this](const PeerInfo& peerInfo, const Message& message) {
+            if (onMessage) onMessage(peerInfo, message);
         });
-        conn->connectTo(p);
+        
+        connection->connectTo(peer);
 
-        lock_guard<mutex> lk(connMtx);
-        connections[p.key()] = conn;
-        peerManager.markSeen(p);
+        lock_guard<mutex> connectionLock(connMtx);
+        connections[peer.key()] = connection;
+        peerManager.markSeen(peer);
     }
 
-    void P2PNode::setMessageHandler(EventCallback cb) { onMessage = move(cb); }
+    void P2PNode::setMessageHandler(EventCallback callback) { 
+        onMessage = move(callback); 
+    }
 
     void P2PNode::doAccept() {
-        auto conn = make_shared<PeerConnection>(io);
-        acceptor.async_accept(conn->socket(), [this, conn](const boost::system::error_code& ec){
-            if (!ec) {
-                // populate peer info from endpoint
-                try {
-                    auto ep = conn->socket().remote_endpoint();
-                    PeerInfo pi;
-                    pi.host = ep.address().to_string();
-                    pi.port = static_cast<uint16_t>(ep.port());
-                    conn->setMessageHandler([this](const PeerInfo& peer, const Message& m){
-                        if (onMessage) onMessage(peer, m);
-                    });
-                    conn->start();
-                    lock_guard<mutex> lk(connMtx);
-                    connections[pi.key()] = conn;
-                    peerManager.markSeen(pi);
-                } catch (...) {}
-            }
-            if (running) doAccept();
-        });
+        auto connection = make_shared<PeerConnection>(io);
+        
+        acceptor.async_accept(connection->socket(), 
+            [this, connection](const boost::system::error_code& errorCode) {
+                if (!errorCode) {
+                    try {
+                        auto endpoint = connection->socket().remote_endpoint();
+                        PeerInfo peerInfo;
+                        peerInfo.host = endpoint.address().to_string();
+                        peerInfo.port = static_cast<uint16_t>(endpoint.port());
+                        
+                        connection->setMessageHandler([this](const PeerInfo& peer, const Message& message) {
+                            if (onMessage) onMessage(peer, message);
+                        });
+                        
+                        connection->start();
+                        
+                        lock_guard<mutex> connectionLock(connMtx);
+                        connections[peerInfo.key()] = connection;
+                        peerManager.markSeen(peerInfo);
+                        
+                    } catch (...) {
+                        // Ignorar excepciones durante la aceptación
+                    }
+                }
+                
+                if (running) doAccept();
+            });
     }
 
     void P2PNode::loadPeersFile(const string& filename) {
@@ -101,12 +124,12 @@ namespace p2p {
         peerManager.persist(filename);
     }
 
-    void P2PNode::onNewConnection(const PeerConnection::Ptr& conn) {
-        // not used currently; placeholder hook
+    void P2PNode::onNewConnection(const PeerConnection::Ptr& connection) {
+        // No utilizado actualmente; placeholder para futura extensión
     }
 
     void P2PNode::removeConnection(const string& key) {
-        lock_guard<mutex> lk(connMtx);
+        lock_guard<mutex> connectionLock(connMtx);
         connections.erase(key);
     }
 

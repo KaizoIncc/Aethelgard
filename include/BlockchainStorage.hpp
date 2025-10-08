@@ -8,6 +8,12 @@
 #include <unordered_map>
 #include <filesystem>
 #include <mutex>
+#include <algorithm>
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <iomanip>
+#include <unordered_set>
 
 using namespace std;
 

@@ -2,6 +2,9 @@
 #include <cstdint>
 #include <vector>
 #include <string>
+#include <cstring>
+#include <zlib.h>      // crc32
+#include <stdexcept>
 
 using namespace std;
 
@@ -15,6 +18,11 @@ namespace p2p {
     inline constexpr size_t   MAX_PAYLOAD_SIZE = 4 * 1024 * 1024; // 4 MB máx
     inline constexpr size_t   MESSAGE_HEADER_SIZE = 4 + 1 + 1 + 8; // magic + version + type + payload_len
     inline constexpr size_t   CHECKSUM_SIZE = 4; // CRC32
+
+    uint32_t hton32(uint32_t v);
+    uint32_t ntoh32(uint32_t v);
+    uint64_t hton64(uint64_t v);
+    uint64_t ntoh64(uint64_t v);
 
     // ============================================================
     //  TIPOS DE MENSAJE
