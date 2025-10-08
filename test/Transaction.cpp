@@ -1,4 +1,8 @@
 #include "Transaction.hpp"
+#include <sodium.h>
+#include <iostream>
+
+using namespace std;
 
 /**
  * The Transaction constructor initializes member variables with default values.
@@ -24,7 +28,6 @@ string Transaction::getSignature() const { return signature; }
 string Transaction::getPublicKey() const { return publicKey; }
 
 // Setters
-// Setters
 void Transaction::setHash(const string& hash) { this->hash = hash; }
 void Transaction::setTimestamp(time_t timestamp) { this->timestamp = timestamp; }
 void Transaction::setSignature(const string& signature) { this->signature = signature; }
@@ -37,14 +40,19 @@ void Transaction::setData(const string& data) { this->data = data; }
 void Transaction::calculateHash() {
     string data = stringForHash();
     
-    unsigned char hash[SHA256_DIGEST_LENGTH];
-    SHA256_CTX sha256;
-    SHA256_Init(&sha256);
-    SHA256_Update(&sha256, data.c_str(), data.size());
-    SHA256_Final(hash, &sha256);
+    // ¡VERSIÓN ACTUALIZADA CON LIBSODIUM!
+    vector<uint8_t> hash_bytes(crypto_hash_sha256_BYTES); // 32 bytes
     
+    // Calcular hash SHA-256 con libsodium
+    crypto_hash_sha256(hash_bytes.data(), 
+                      reinterpret_cast<const unsigned char*>(data.c_str()), 
+                      data.size());
+    
+    // Convertir a hexadecimal
     stringstream ss;
-    for(int i = 0; i < SHA256_DIGEST_LENGTH; i++) { ss << hex << setw(2) << setfill('0') << (int)hash[i]; }
+    for (uint8_t byte : hash_bytes) {
+        ss << hex << setw(2) << setfill('0') << static_cast<int>(byte);
+    }
     
     this->hash = ss.str();
 }
@@ -99,16 +107,27 @@ bool Transaction::sign(const string& privateKey) {
     if (from == to) return false;
 
     calculateHash(); // asegurar que el hash esté actualizado
+    cout << "DEBUG: Hash to sign (hex): " << hash << endl;
+    cout << "DEBUG: Hash length: " << hash.length() << endl;
     signature = CryptoUtils::signMessage(privateKey, hash);
+    cout << "DEBUG: Signature result: " << (signature.empty() ? "FAILED" : "SUCCESS") << endl;
     publicKey = derivedPubKey; // guardamos la pubkey para la verificación
 
     return !signature.empty();
 }
 
 bool Transaction::verifySignature() const {
-    if (signature.empty() || publicKey.empty()) return false;
+    if (signature.empty() || publicKey.empty() || hash.empty()) {
+        return false;
+    }
     
-    return CryptoUtils::verifySignature(publicKey, hash, signature);
+    // Verificar que la clave pública sea válida
+    if (!CryptoUtils::isValidPublicKey(publicKey)) {
+        return false;
+    }
+    
+    // Usar la versión específica para hashes hexadecimales
+    return CryptoUtils::verifySignatureHex(publicKey, hash, signature);
 }
 
 bool Transaction::involvesAddress(const string& address) const {

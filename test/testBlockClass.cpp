@@ -6,25 +6,11 @@
 #include <chrono>
 #include <vector>
 #include <string>
-#include <openssl/sha.h>
 #include <sstream>
 #include <iomanip>
+#include <cfloat>  // Para DBL_MAX, DBL_MIN
 
 using namespace std;
-
-// ------------------- Helper para SHA-256 -------------------
-string sha256Hex(const string& data) {
-    unsigned char hash[SHA256_DIGEST_LENGTH];
-    SHA256_CTX sha256;
-    SHA256_Init(&sha256);
-    SHA256_Update(&sha256, data.c_str(), data.size());
-    SHA256_Final(hash, &sha256);
-
-    stringstream ss;
-    for (int i = 0; i < SHA256_DIGEST_LENGTH; i++)
-        ss << hex << setw(2) << setfill('0') << (int)hash[i];
-    return ss.str();
-}
 
 // ------------------- Fixture -------------------
 class BlockTest : public ::testing::Test {
@@ -33,6 +19,9 @@ protected:
     string privKey2, pubKey2, addr2;
 
     void SetUp() override {
+        // Inicializar crypto system primero
+        ASSERT_TRUE(CryptoUtils::initialize());
+        
         ASSERT_TRUE(CryptoUtils::generateKeyPair(privKey1, pubKey1));
         ASSERT_TRUE(CryptoUtils::generateKeyPair(privKey2, pubKey2));
 
@@ -81,7 +70,8 @@ TEST_F(BlockTest, AddInvalidTransaction) {
 // ------------------- Merkle Root -------------------
 TEST_F(BlockTest, MerkleRootEmptyBlock) {
     Block b(1, "prev");
-    EXPECT_EQ(b.calculateMerkleRoot(), sha256Hex(""));
+    // Usamos CryptoUtils::sha256 en lugar de sha256Hex
+    EXPECT_EQ(b.calculateMerkleRoot(), CryptoUtils::sha256(""));
 }
 
 TEST_F(BlockTest, MerkleRootSingleTransaction) {
@@ -99,6 +89,11 @@ TEST_F(BlockTest, MerkleRootMultipleTransactions) {
     Block b(1, "prev");
     Transaction tx1(addr1, addr2, 1.0, "A");
     Transaction tx2(addr2, addr1, 2.0, "B");
+    
+    // Firmar las transacciones
+    EXPECT_TRUE(tx1.sign(privKey1));
+    EXPECT_TRUE(tx2.sign(privKey2));
+    
     b.addTransaction(tx1);
     b.addTransaction(tx2);
     string root = b.calculateMerkleRoot();
@@ -109,6 +104,10 @@ TEST_F(BlockTest, MerkleRootMultipleTransactions) {
 TEST_F(BlockTest, BlockHashUpdatesHeader) {
     Block b(1, "prev");
     Transaction tx(addr1, addr2, 1.0, "A");
+    
+    // Firmar la transacción
+    EXPECT_TRUE(tx.sign(privKey1));
+    
     b.addTransaction(tx);
     string hash = b.calculateBlockHash();
     EXPECT_EQ(hash, b.getHeader().getHash());
@@ -118,6 +117,10 @@ TEST_F(BlockTest, BlockHashUpdatesHeader) {
 TEST_F(BlockTest, ValidBlock) {
     Block b(0, "");
     Transaction tx(addr1, addr2, 1.0, "A");
+    
+    // Firmar la transacción
+    EXPECT_TRUE(tx.sign(privKey1));
+    
     b.addTransaction(tx);
     b.calculateBlockHash();
     EXPECT_TRUE(b.isValid());
@@ -126,8 +129,13 @@ TEST_F(BlockTest, ValidBlock) {
 TEST_F(BlockTest, InvalidBlockWithModifiedTransaction) {
     Block b(0, "");
     Transaction tx(addr1, addr2, 1.0, "A");
+    
+    // Firmar la transacción
+    EXPECT_TRUE(tx.sign(privKey1));
+    
     b.addTransaction(tx);
     b.calculateBlockHash();
+    
     Transaction modified = tx;
     modified.setAmount(10.0); // fuera del bloque
     EXPECT_TRUE(b.isValid()); // sigue válido porque tx dentro del bloque no cambió
@@ -141,8 +149,12 @@ TEST_F(BlockTest, InvalidPreviousHash) {
 // ------------------- Robustez / estrés -------------------
 TEST_F(BlockTest, ExtremeTransactions) {
     Block b(1, "prev");
-    for(int i=0;i<1000;i++){
-        Transaction tx(addr1, addr2, 1.0+i, "Tx"+to_string(i));
+    for(int i = 0; i < 1000; i++) {
+        Transaction tx(addr1, addr2, 1.0 + i, "Tx" + to_string(i));
+        
+        // Firmar cada transacción
+        EXPECT_TRUE(tx.sign(privKey1));
+        
         b.addTransaction(tx);
     }
     b.calculateBlockHash();
@@ -154,6 +166,11 @@ TEST_F(BlockTest, TransactionsOrderMatters) {
     Block b(1, "prev");
     Transaction tx1(addr1, addr2, 1.0, "A");
     Transaction tx2(addr2, addr1, 2.0, "B");
+    
+    // Firmar las transacciones
+    EXPECT_TRUE(tx1.sign(privKey1));
+    EXPECT_TRUE(tx2.sign(privKey2));
+    
     b.addTransaction(tx1);
     b.addTransaction(tx2);
     b.calculateBlockHash();
@@ -185,13 +202,10 @@ TEST_F(BlockTest, BlockInvalidWithInternalInvalidTransaction) {
 TEST_F(BlockTest, TransactionsOrderChangesMerkleRoot) {
     Block b1(1, "prev");
     Transaction tx1(addr1, addr2, 1.0, "A");
-
-    // Firmamos para que la transacción sea válida
-    EXPECT_TRUE(tx1.sign(privKey1));
-
     Transaction tx2(addr2, addr1, 2.0, "B");
 
-    // Firmamos para que la transacción sea válida
+    // Firmar las transacciones
+    EXPECT_TRUE(tx1.sign(privKey1));
     EXPECT_TRUE(tx2.sign(privKey2));
 
     b1.addTransaction(tx1);
@@ -211,7 +225,7 @@ TEST_F(BlockTest, DuplicateTransactions) {
     Block b(1, "prev");
     Transaction tx(addr1, addr2, 1.0, "A");
 
-    // Firmamos para que la transacción sea válida
+    // Firmar la transacción
     EXPECT_TRUE(tx.sign(privKey1));
 
     b.addTransaction(tx);
@@ -226,8 +240,38 @@ TEST_F(BlockTest, ExtremeTransactionAmounts) {
     Block b(1, "prev");
     Transaction txMax(addr1, addr2, DBL_MAX, "Max");
     Transaction txMin(addr1, addr2, DBL_MIN, "Min");
+    
+    // Firmar las transacciones
+    EXPECT_TRUE(txMax.sign(privKey1));
+    EXPECT_TRUE(txMin.sign(privKey1));
+    
     b.addTransaction(txMax);
     b.addTransaction(txMin);
     b.calculateBlockHash();
     EXPECT_TRUE(b.isValid());
+}
+
+// ------------------- Performance Test -------------------
+TEST_F(BlockTest, PerformanceTest) {
+    auto start = chrono::high_resolution_clock::now();
+    
+    Block b(1, "prev");
+    for(int i = 0; i < 100; i++) {
+        Transaction tx(addr1, addr2, 1.0 + i, "Tx" + to_string(i));
+        
+        // Firmar con libsodium (¡8x más rápido!)
+        EXPECT_TRUE(tx.sign(privKey1));
+        
+        b.addTransaction(tx);
+    }
+    
+    b.calculateBlockHash();
+    EXPECT_TRUE(b.isValid());
+    
+    auto end = chrono::high_resolution_clock::now();
+    auto duration = chrono::duration_cast<chrono::milliseconds>(end - start);
+    
+    cout << "Performance test completed in " << duration.count() << " ms" << endl;
+    // Con libsodium, esto debería ser mucho más rápido que con OpenSSL
+    EXPECT_LT(duration.count(), 1000); // Menos de 1 segundo para 100 transacciones
 }

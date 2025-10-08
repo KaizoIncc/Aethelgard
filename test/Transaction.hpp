@@ -5,7 +5,6 @@
 #include <string>
 #include <vector>
 #include <ctime>
-#include <openssl/sha.h>
 #include <sstream>
 #include <iomanip>
 #include <chrono>

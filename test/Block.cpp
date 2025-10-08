@@ -27,15 +27,20 @@ string Block::calculateMerkleRoot() const {
     if (transactions.empty()) return calculateHash(""); // Hash vacío para bloques sin transacciones
     
     vector<string> hashes;
-    for (const auto& tx : transactions) { hashes.push_back(tx.getHash()); }
+    for (const auto& tx : transactions) { 
+        hashes.push_back(tx.getHash()); 
+    }
     
     // Algoritmo simple de merkle tree
     while (hashes.size() > 1) {
         vector<string> newHashes;
         
         for (size_t i = 0; i < hashes.size(); i += 2) {
-            if (i + 1 < hashes.size()) newHashes.push_back(calculateHash(hashes[i] + hashes[i + 1]));
-            else newHashes.push_back(calculateHash(hashes[i] + hashes[i]));
+            if (i + 1 < hashes.size()) {
+                newHashes.push_back(calculateHash(hashes[i] + hashes[i + 1]));
+            } else {
+                newHashes.push_back(calculateHash(hashes[i] + hashes[i]));
+            }
         }
         
         hashes = newHashes;
@@ -64,7 +69,9 @@ bool Block::isValid() const {
     if (calculateMerkleRoot() != header.getMerkleRoot()) return false;
     
     // Verificar transacciones
-    for (const auto& tx : transactions) { if (!tx.isValid()) return false; }
+    for (const auto& tx : transactions) { 
+        if (!tx.isValid()) return false; 
+    }
     
     // Verificar que el previousHash no esté vacío (excepto para el genesis block)
     if (header.getIndex() > 0 && header.getPreviousHash().empty()) return false;
@@ -77,14 +84,19 @@ vector<Transaction> Block::getTransactions() const { return transactions; }
 int64_t Block::getTransactionCount() const { return transactions.size(); }
 
 string Block::calculateHash(const string& data) const {
-    unsigned char hash[SHA256_DIGEST_LENGTH];
-    SHA256_CTX sha256;
-    SHA256_Init(&sha256);
-    SHA256_Update(&sha256, data.c_str(), data.size());
-    SHA256_Final(hash, &sha256);
+    // ¡VERSIÓN ACTUALIZADA CON LIBSODIUM!
+    vector<uint8_t> hash(crypto_hash_sha256_BYTES); // 32 bytes
     
+    // Calcular hash SHA-256 con libsodium
+    crypto_hash_sha256(hash.data(), 
+                      reinterpret_cast<const unsigned char*>(data.c_str()), 
+                      data.size());
+    
+    // Convertir a hexadecimal
     stringstream ss;
-    for(int i = 0; i < SHA256_DIGEST_LENGTH; i++) { ss << hex << setw(2) << setfill('0') << (int)hash[i]; }
+    for (uint8_t byte : hash) {
+        ss << hex << setw(2) << setfill('0') << static_cast<int>(byte);
+    }
     
     return ss.str();
 }

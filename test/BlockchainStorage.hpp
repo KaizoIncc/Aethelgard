@@ -13,7 +13,6 @@
 #include <iostream>
 #include <sstream>
 #include <iomanip>
-#include <openssl/sha.h>
 #include <unordered_set>
 
 using namespace std;

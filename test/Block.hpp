@@ -3,6 +3,7 @@
 
 #include "BlockHeader.hpp"
 #include "Transaction.hpp"
+#include <sodium.h>
 #include <memory>
 #include <iomanip>
 #include <algorithm>
