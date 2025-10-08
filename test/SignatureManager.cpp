@@ -72,12 +72,13 @@ bool SignatureManager::verifySignatureString(const string& publicKey, const stri
         return false;
     }
     
-    // Convertir el mensaje string a bytes
     vector<uint8_t> messageBytes(message.begin(), message.end());
     
-    return crypto_sign_verify_detached(signatureBytes.data(),
-                                     messageBytes.data(), messageBytes.size(),
-                                     publicKeyBytes.data()) == 0;
+    int result = crypto_sign_verify_detached(signatureBytes.data(),
+                                           messageBytes.data(), messageBytes.size(),
+                                           publicKeyBytes.data());
+
+    return result == 0;
 }
 
 // Para mensajes en formato hexadecimal (hashes)

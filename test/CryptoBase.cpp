@@ -116,14 +116,14 @@ string CryptoBase::sha256(const vector<uint8_t>& data) {
 
 // Generación de claves Ed25519 (¡DRAMÁTICAMENTE más simple!)
 bool CryptoBase::generateKeyPair(vector<uint8_t>& privateKey, vector<uint8_t>& publicKey) {
-    privateKey.resize(32);  // Ed25519 private key size
-    publicKey.resize(32);   // Ed25519 public key size
+    privateKey.resize(64);  // Clave privada completa de libsodium
+    publicKey.resize(32);   // Clave pública
     
     return crypto_sign_keypair(publicKey.data(), privateKey.data()) == 0;
 }
 
 bool CryptoBase::generateKeyPair(string& privateKey, string& publicKey) {
-    vector<uint8_t> priv(32), pub(32);
+    vector<uint8_t> priv(64), pub(32);
     
     if (!generateKeyPair(priv, pub)) {
         return false;
@@ -182,4 +182,12 @@ vector<uint8_t> CryptoBase::hexDecode(const string& hexStr) {
     }
     
     return bytes;
+}
+
+string CryptoBase::bytesToHex(const vector<uint8_t>& data) {
+    stringstream hexStream;
+    for (uint8_t byte : data) {
+        hexStream << hex << setw(2) << setfill('0') << static_cast<int>(byte);
+    }
+    return hexStream.str();
 }

@@ -1,0 +1,169 @@
+Running main() from ./googletest/src/gtest_main.cc
+Note: Google Test filter = TransactionTest.ComprehensiveThroughputAndBottleneckAnalysis
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from TransactionTest
+[ RUN      ] TransactionTest.ComprehensiveThroughputAndBottleneckAnalysis
+🔍 EJECUTANDO ANÁLISIS COMPLETO DE THROUGHPUT Y CUELOS DE BOTELLA
+Tiempo límite: 3000 ms
+Tiempo | Transacciones | TPS actual | Crear | Firmar | Verificar | Bottleneck
+--------------------------------------------------------------------------------       
+   100 ms |           728 |       7280 |    6.1 |   51.3 |      77.6 | VERIFICACIÓN
+   200 ms |          1453 |       7250 |    5.6 |   52.4 |      77.4 | Ninguno
+   300 ms |          2243 |       7900 |    5.5 |   47.5 |      70.9 | Ninguno
+   404 ms |          3045 |       7712 |   12.0 |   45.7 |      70.1 | VERIFICACIÓN
+   504 ms |          3825 |       7800 |    5.6 |   47.6 |      73.0 | VERIFICACIÓN
+   604 ms |          4524 |       6990 |    6.0 |   52.9 |      80.2 | VERIFICACIÓN
+   704 ms |          5336 |       8120 |    5.3 |   46.6 |      69.1 | Ninguno
+   804 ms |          6142 |       8060 |    5.2 |   47.4 |      69.3 | Ninguno
+   904 ms |          6946 |       8040 |    5.3 |   47.1 |      69.7 | Ninguno
+  1007 ms |          7735 |       7735 |    5.1 |   53.1 |      69.0 | Ninguno
+  1107 ms |          8437 |       7020 |    6.2 |   53.9 |      78.4 | Ninguno
+  1207 ms |          9238 |       8010 |    5.0 |   46.9 |      70.8 | VERIFICACIÓN
+  1307 ms |          9907 |       6690 |    6.6 |   57.4 |      83.1 | Ninguno
+  1407 ms |         10681 |       7740 |    5.4 |   48.9 |      72.6 | Ninguno
+  1507 ms |         11356 |       6750 |    5.9 |   61.1 |      78.9 | Ninguno
+  1607 ms |         12141 |       7850 |    5.2 |   48.4 |      71.5 | Ninguno
+  1707 ms |         12956 |       8150 |    5.5 |   45.9 |      69.0 | VERIFICACIÓN
+  1807 ms |         13726 |       7700 |    5.6 |   48.7 |      73.1 | VERIFICACIÓN
+  1907 ms |         14477 |       7510 |    5.4 |   54.9 |      70.6 | Ninguno
+  2007 ms |         15265 |       7880 |    5.4 |   48.6 |      71.1 | Ninguno
+  2107 ms |         16043 |       7780 |    5.6 |   48.0 |      72.1 | VERIFICACIÓN
+  2207 ms |         16838 |       7950 |    5.3 |   45.8 |      68.9 | VERIFICACIÓN
+  2307 ms |         17644 |       8060 |    5.8 |   46.5 |      69.5 | Ninguno
+  2407 ms |         18451 |       8070 |    5.2 |   46.6 |      70.2 | VERIFICACIÓN
+  2508 ms |         19277 |       8260 |    5.1 |   45.4 |      67.9 | Ninguno
+  2608 ms |         20020 |       7430 |    5.5 |   55.9 |      70.9 | Ninguno
+  2708 ms |         20846 |       8260 |    5.3 |   44.8 |      68.7 | VERIFICACIÓN
+  2808 ms |         21671 |       8250 |    5.1 |   45.5 |      68.4 | VERIFICACIÓN
+  2908 ms |         22392 |       7210 |    5.8 |   57.1 |      73.6 | Ninguno
+
+=== ANÁLISIS COMPLETO DE CUELOS DE BOTELLA ===
+Distribución del tiempo por operación:
+  • Creación: 5.7 μs (4.5%)
+  • Firma: 49.7 μs (38.9%)
+  • Verificación: 72.3 μs (56.6%)
+
+🔍 IDENTIFICACIÓN DE CUELOS DE BOTELLA:
+  📊 DISTRIBUCIÓN BALANCEADA con operación dominante
+
+=== EVOLUCIÓN TEMPORAL DEL RENDIMIENTO ===
+Análisis por lotes de 500 transacciones:
+  Lote 1 (TX 0-500):
+    • TPS: 6666.7 | Crear: 6.8 μs | Firmar: 56.6 μs | Verificar: 85.0 μs
+  Lote 2 (TX 500-1000):
+    • TPS: 7042.3 | Crear: 6.6 μs | Firmar: 60.7 μs | Verificar: 85.0 μs
+  Lote 3 (TX 1000-1500):
+    • TPS: 7281.6 | Crear: 5.3 μs | Firmar: 46.5 μs | Verificar: 72.0 μs
+  Lote 4 (TX 1500-2000):
+    • TPS: 7352.9 | Crear: 6.0 μs | Firmar: 50.0 μs | Verificar: 74.6 μs
+  Lote 5 (TX 2000-2500):
+    • TPS: 7331.4 | Crear: 7.4 μs | Firmar: 59.2 μs | Verificar: 90.2 μs
+  Lote 6 (TX 2500-3000):
+    • TPS: 7633.6 | Crear: 5.2 μs | Firmar: 45.8 μs | Verificar: 70.2 μs
+  Lote 7 (TX 3000-3500):
+    • TPS: 7478.6 | Crear: 6.4 μs | Firmar: 52.2 μs | Verificar: 79.4 μs
+  Lote 8 (TX 3500-4000):
+    • TPS: 7462.7 | Crear: 8.1 μs | Firmar: 67.0 μs | Verificar: 100.2 μs
+  Lote 9 (TX 4000-4500):
+    • TPS: 7475.1 | Crear: 6.0 μs | Firmar: 53.5 μs | Verificar: 80.9 μs
+  Lote 10 (TX 4500-5000):
+    • TPS: 7496.3 | Crear: 5.5 μs | Firmar: 49.7 μs | Verificar: 73.8 μs
+  Lote 11 (TX 5000-5500):
+    • TPS: 7523.9 | Crear: 7.3 μs | Firmar: 62.6 μs | Verificar: 88.9 μs
+  Lote 12 (TX 5500-6000):
+    • TPS: 7604.6 | Crear: 5.4 μs | Firmar: 48.8 μs | Verificar: 71.2 μs
+  Lote 13 (TX 6000-6500):
+    • TPS: 7593.5 | Crear: 6.2 μs | Firmar: 54.2 μs | Verificar: 79.8 μs
+  Lote 14 (TX 6500-7000):
+    • TPS: 7675.4 | Crear: 5.1 μs | Firmar: 50.6 μs | Verificar: 79.5 μs
+  Lote 15 (TX 7000-7500):
+    • TPS: 7684.4 | Crear: 5.6 μs | Firmar: 48.2 μs | Verificar: 72.0 μs
+  Lote 16 (TX 7500-8000):
+    • TPS: 7582.9 | Crear: 8.2 μs | Firmar: 69.6 μs | Verificar: 101.4 μs
+  Lote 17 (TX 8000-8500):
+    • TPS: 7623.3 | Crear: 5.3 μs | Firmar: 48.6 μs | Verificar: 71.0 μs
+  Lote 18 (TX 8500-9000):
+    • TPS: 7620.7 | Crear: 5.4 μs | Firmar: 49.6 μs | Verificar: 75.0 μs
+  Lote 19 (TX 9000-9500):
+    • TPS: 7618.3 | Crear: 6.9 μs | Firmar: 58.1 μs | Verificar: 85.2 μs
+  Lote 20 (TX 9500-10000):
+    • TPS: 7570.0 | Crear: 5.3 μs | Firmar: 59.6 μs | Verificar: 87.0 μs
+  Lote 21 (TX 10000-10500):
+    • TPS: 7570.3 | Crear: 5.6 μs | Firmar: 51.4 μs | Verificar: 75.6 μs
+  Lote 22 (TX 10500-11000):
+    • TPS: 7560.1 | Crear: 6.9 μs | Firmar: 57.4 μs | Verificar: 84.3 μs
+  Lote 23 (TX 11000-11500):
+    • TPS: 7536.0 | Crear: 5.7 μs | Firmar: 48.0 μs | Verificar: 72.3 μs
+  Lote 24 (TX 11500-12000):
+    • TPS: 7556.7 | Crear: 5.3 μs | Firmar: 48.1 μs | Verificar: 70.7 μs
+  Lote 25 (TX 12000-12500):
+    • TPS: 7539.2 | Crear: 7.0 μs | Firmar: 52.2 μs | Verificar: 80.4 μs
+  Lote 26 (TX 12500-13000):
+    • TPS: 7589.0 | Crear: 5.0 μs | Firmar: 45.8 μs | Verificar: 69.2 μs
+  Lote 27 (TX 13000-13500):
+    • TPS: 7567.3 | Crear: 6.2 μs | Firmar: 52.8 μs | Verificar: 78.7 μs
+  Lote 28 (TX 13500-14000):
+    • TPS: 7575.8 | Crear: 6.4 μs | Firmar: 57.0 μs | Verificar: 83.4 μs
+  Lote 29 (TX 14000-14500):
+    • TPS: 7587.7 | Crear: 9.0 μs | Firmar: 52.7 μs | Verificar: 83.7 μs
+  Lote 30 (TX 14500-15000):
+    • TPS: 7579.6 | Crear: 5.9 μs | Firmar: 52.1 μs | Verificar: 75.9 μs
+  Lote 31 (TX 15000-15500):
+    • TPS: 7572.1 | Crear: 7.9 μs | Firmar: 62.7 μs | Verificar: 93.8 μs
+  Lote 32 (TX 15500-16000):
+    • TPS: 7608.2 | Crear: 5.7 μs | Firmar: 48.6 μs | Verificar: 73.0 μs
+  Lote 33 (TX 16000-16500):
+    • TPS: 7596.7 | Crear: 6.2 μs | Firmar: 50.5 μs | Verificar: 75.9 μs
+  Lote 34 (TX 16500-17000):
+    • TPS: 7613.1 | Crear: 6.8 μs | Firmar: 58.9 μs | Verificar: 89.3 μs
+  Lote 35 (TX 17000-17500):
+    • TPS: 7635.3 | Crear: 6.2 μs | Firmar: 47.8 μs | Verificar: 71.4 μs
+  Lote 36 (TX 17500-18000):
+    • TPS: 7633.6 | Crear: 6.2 μs | Firmar: 52.3 μs | Verificar: 79.7 μs
+  Lote 37 (TX 18000-18500):
+    • TPS: 7663.6 | Crear: 5.6 μs | Firmar: 42.8 μs | Verificar: 65.5 μs
+  Lote 38 (TX 18500-19000):
+    • TPS: 7670.6 | Crear: 5.5 μs | Firmar: 47.2 μs | Verificar: 71.0 μs
+  Lote 39 (TX 19000-19500):
+    • TPS: 7665.1 | Crear: 5.8 μs | Firmar: 76.0 μs | Verificar: 77.9 μs
+  Lote 40 (TX 19500-20000):
+    • TPS: 7674.6 | Crear: 5.5 μs | Firmar: 56.3 μs | Verificar: 71.3 μs
+  Lote 41 (TX 20000-20500):
+    • TPS: 7675.0 | Crear: 5.7 μs | Firmar: 49.0 μs | Verificar: 75.1 μs
+  Lote 42 (TX 20500-21000):
+    • TPS: 7700.8 | Crear: 5.3 μs | Firmar: 47.5 μs | Verificar: 70.6 μs
+  Lote 43 (TX 21000-21500):
+    • TPS: 7711.6 | Crear: 5.3 μs | Firmar: 46.4 μs | Verificar: 69.6 μs
+  Lote 44 (TX 21500-22000):
+    • TPS: 7703.1 | Crear: 6.0 μs | Firmar: 55.9 μs | Verificar: 82.6 μs
+  Lote 45 (TX 22000-22500):
+    • TPS: 7687.1 | Crear: 8.2 μs | Firmar: 64.8 μs | Verificar: 103.2 μs
+  Lote 46 (TX 22500-23000):
+    • TPS: 7694.9 | Crear: 5.7 μs | Firmar: 50.5 μs | Verificar: 74.8 μs
+
+=== RESULTADOS FINALES ===
+Tiempo total de ejecución: 3000 ms
+Transacciones procesadas: 23096
+Throughput promedio: 7698.7 TX/segundo
+Tiempo promedio por transacción: 129 μs
+Tamaño del vector: 23096 (verificación)
+
+--- Análisis de Consistencia ---
+TPS mínimo: 6690.0 TX/s
+TPS máximo: 8260.0 TX/s
+Variación: ±20.4%
+
+=== RESUMEN EJECUTIVO ===
+🎯 Throughput alcanzado: 7698.7 TX/segundo
+📊 Transacciones en 3000ms: 23096
+⚡ Eficiencia: 100.0% del potencial
+
+✅ Test completado: 23096 transacciones en 3000 ms (7698.7 TX/segundo)
+💡 RECOMENDACIÓN: Rendimiento óptimo alcanzado
+[       OK ] TransactionTest.ComprehensiveThroughputAndBottleneckAnalysis (3005 ms)
+[----------] 1 test from TransactionTest (3005 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (3005 ms total)
+[  PASSED  ] 1 test.

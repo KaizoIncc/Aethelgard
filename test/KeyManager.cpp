@@ -13,29 +13,39 @@ bool KeyManager::generateKeyPair(vector<uint8_t>& privateKey, vector<uint8_t>& p
 }
 
 string KeyManager::derivePublicKey(const string& privateKeyBase64) {
-    // Con Ed25519, la clave pública se deriva trivialmente
-    // Pero en libsodium, necesitamos generarla desde la privada
-    
     vector<uint8_t> privateKeyBytes = CryptoBase::base64Decode(privateKeyBase64);
-    if (privateKeyBytes.size() != 32) return "";
     
-    vector<uint8_t> publicKey(32);
-    
-    // Derivar clave pública desde privada
-    if (crypto_sign_ed25519_sk_to_pk(publicKey.data(), privateKeyBytes.data()) != 0) {
-        return "";
+    if (privateKeyBytes.size() == 32) {
+        // Es una semilla - generar par de claves completo
+        vector<uint8_t> publicKey(32);
+        vector<uint8_t> privateKeyFull(64);
+        
+        if (crypto_sign_seed_keypair(publicKey.data(), privateKeyFull.data(), 
+                                    privateKeyBytes.data()) != 0) {
+            return "";
+        }
+        return CryptoBase::base64Encode(publicKey);
+        
+    } else if (privateKeyBytes.size() == 64) {
+        // Es una clave privada completa - extraer solo la pública
+        vector<uint8_t> publicKey(32);
+        
+        if (crypto_sign_ed25519_sk_to_pk(publicKey.data(), privateKeyBytes.data()) != 0) {
+            return "";
+        }
+        return CryptoBase::base64Encode(publicKey);
+        
+    } else {
+        return ""; // Tamaño inválido
     }
-    
-    return CryptoBase::base64Encode(publicKey);
 }
 
 bool KeyManager::isValidPrivateKey(const string& privateKey) {
     try {
         vector<uint8_t> privateKeyBytes = CryptoBase::base64Decode(privateKey);
         
-        // En Ed25519, cualquier secuencia de 32 bytes es válida
-        // Pero verificamos que no sea todo ceros por seguridad
-        return privateKeyBytes.size() == 32 && 
+        // Aceptar tanto semillas (32 bytes) como claves privadas completas (64 bytes)
+        return (privateKeyBytes.size() == 32 || privateKeyBytes.size() == 64) && 
                !all_of(privateKeyBytes.begin(), privateKeyBytes.end(), 
                       [](uint8_t b) { return b == 0; });
     } catch (...) {

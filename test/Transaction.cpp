@@ -107,10 +107,7 @@ bool Transaction::sign(const string& privateKey) {
     if (from == to) return false;
 
     calculateHash(); // asegurar que el hash esté actualizado
-    cout << "DEBUG: Hash to sign (hex): " << hash << endl;
-    cout << "DEBUG: Hash length: " << hash.length() << endl;
     signature = CryptoUtils::signMessage(privateKey, hash);
-    cout << "DEBUG: Signature result: " << (signature.empty() ? "FAILED" : "SUCCESS") << endl;
     publicKey = derivedPubKey; // guardamos la pubkey para la verificación
 
     return !signature.empty();

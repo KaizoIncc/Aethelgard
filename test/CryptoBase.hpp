@@ -25,6 +25,7 @@ public:
     static vector<uint8_t> base64Decode(const string& encoded);
     static string hexEncode(const vector<uint8_t>& data);
     static vector<uint8_t> hexDecode(const string& hexStr);
+    static string bytesToHex(const vector<uint8_t>& data);
     
     // Generación de claves Ed25519 (NUEVO - mucho más simple)
     static bool generateKeyPair(string& privateKey, string& publicKey);
