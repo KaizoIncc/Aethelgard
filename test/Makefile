@@ -1,10 +1,10 @@
 # Compilador y flags
 CXX = g++
-CXXFLAGS = -std=c++17 -pthread -Wno-deprecated-declarations
+CXXFLAGS = -std=c++17 -pthread -Wno-deprecated-declarations -I. -g
 LIBS = -lgtest -lgtest_main -lsodium -lz
 
-# Archivos fuente comunes
-COMMON_SRCS = Utils.cpp CryptoBase.cpp KeyManager.cpp SignatureManager.cpp AddressManager.cpp
+# Archivos fuente comunes - CORREGIDO
+COMMON_SRCS = CryptoBase.cpp KeyManager.cpp SignatureManager.cpp AddressManager.cpp Types.hpp
 BLOCK_HEADER_SRCS = BlockHeader.cpp
 BLOCK_SRCS = Block.cpp $(BLOCK_HEADER_SRCS) Transaction.cpp $(COMMON_SRCS)
 TRANSACTION_SRCS = Transaction.cpp $(COMMON_SRCS)
@@ -13,36 +13,35 @@ MESSAGE_SRCS = Message.cpp
 PEER_MANAGER_SRCS = PeerManager.cpp
 PEER_CONNECTION_SRCS = PeerConnection.cpp $(MESSAGE_SRCS) $(PEER_MANAGER_SRCS)
 
-# Targets de tests
-TEST_TARGETS = testBlockClass testIntegratedBlockchain1 testTransactionClass testBlockchainStorageClass testBlockHeaderClass testMessageClass testPeerManagerClass testPeerConnectionClass
+# Targets de tests - AGREGADOS LOS NUEVOS TESTS
+TEST_TARGETS = test_Block test_BlockHeader test_CryptoBase test_KeyManager test_SignatureManager test_AddressManager test_Transaction
 
 # Mapeo de archivos de test a ejecutables
 TEST_EXECUTABLES = $(TEST_TARGETS)
 
-# Reglas de compilación para cada test
-testBlockClass: testBlockClass.cpp $(BLOCK_SRCS)
-	$(CXX) $(CXXFLAGS) testBlockClass.cpp $(BLOCK_SRCS) $(LIBS) -o $@
+# Reglas de compilación para cada test - CORREGIDAS LAS DEPENDENCIAS
 
-testIntegratedBlockchain1: testIntegratedBlockchain1.cpp $(BLOCKCHAIN_STORAGE_SRCS)
-	$(CXX) $(CXXFLAGS) testIntegratedBlockchain1.cpp $(BLOCKCHAIN_STORAGE_SRCS) $(LIBS) -o $@
+# Tests originales
+test_Block: test_Block.cpp $(BLOCK_SRCS)
+	$(CXX) $(CXXFLAGS) test_Block.cpp $(BLOCK_SRCS) $(LIBS) -o $@
 
-testTransactionClass: testTransactionClass.cpp $(TRANSACTION_SRCS)
-	$(CXX) $(CXXFLAGS) testTransactionClass.cpp $(TRANSACTION_SRCS) $(LIBS) -o $@
+test_BlockHeader: test_BlockHeader.cpp $(BLOCK_HEADER_SRCS) $(COMMON_SRCS)
+	$(CXX) $(CXXFLAGS) test_BlockHeader.cpp $(BLOCK_HEADER_SRCS) $(COMMON_SRCS) $(LIBS) -o $@
 
-testBlockchainStorageClass: testBlockchainStorageClass.cpp $(BLOCKCHAIN_STORAGE_SRCS)
-	$(CXX) $(CXXFLAGS) testBlockchainStorageClass.cpp $(BLOCKCHAIN_STORAGE_SRCS) $(LIBS) -o $@
+test_CryptoBase: test_CryptoBase.cpp $(COMMON_SRCS)
+	$(CXX) $(CXXFLAGS) test_CryptoBase.cpp $(COMMON_SRCS) $(LIBS) -o $@
 
-testBlockHeaderClass: testBlockHeaderClass.cpp $(BLOCK_HEADER_SRCS)
-	$(CXX) $(CXXFLAGS) testBlockHeaderClass.cpp $(BLOCK_HEADER_SRCS) $(LIBS) -o $@
+test_KeyManager: test_KeyManager.cpp $(COMMON_SRCS)
+	$(CXX) $(CXXFLAGS) test_KeyManager.cpp $(COMMON_SRCS) $(LIBS) -o $@
 
-testMessageClass: testMessageClass.cpp $(MESSAGE_SRCS)
-	$(CXX) $(CXXFLAGS) testMessageClass.cpp $(MESSAGE_SRCS) $(LIBS) -o $@
+test_SignatureManager: test_SignatureManager.cpp $(COMMON_SRCS)
+	$(CXX) $(CXXFLAGS) test_SignatureManager.cpp $(COMMON_SRCS) $(LIBS) -o $@
 
-testPeerManagerClass: testPeerManagerClass.cpp $(PEER_MANAGER_SRCS)
-	$(CXX) $(CXXFLAGS) testPeerManagerClass.cpp $(PEER_MANAGER_SRCS) $(LIBS) -o $@
+test_AddressManager: test_AddressManager.cpp $(COMMON_SRCS)
+	$(CXX) $(CXXFLAGS) test_AddressManager.cpp $(COMMON_SRCS) $(LIBS) -o $@
 
-testPeerConnectionClass: testPeerConnectionClass.cpp $(PEER_CONNECTION_SRCS)
-	$(CXX) $(CXXFLAGS) testPeerConnectionClass.cpp $(PEER_CONNECTION_SRCS) $(LIBS) -o $@
+test_Transaction: test_Transaction.cpp $(TRANSACTION_SRCS)
+	$(CXX) $(CXXFLAGS) test_Transaction.cpp $(TRANSACTION_SRCS) $(LIBS) -o $@
 
 # Reglas principales
 all: $(TEST_TARGETS)
@@ -96,15 +95,39 @@ endif
 		exit 1; \
 	fi
 
+# Reglas para ejecutar tests individuales
+test-blockheader: testBlockHeader
+	@echo "=== Ejecutando testBlockHeader ==="
+	./testBlockHeader
+
+test-cryptobase: testCryptoBase
+	@echo "=== Ejecutando testCryptoBase ==="
+	./testCryptoBase
+
+test-keymanager: testKeyManager
+	@echo "=== Ejecutando testKeyManager ==="
+	./testKeyManager
+
+test-signaturemanager: testSignatureManager
+	@echo "=== Ejecutando testSignatureManager ==="
+	./testSignatureManager
+
+test-addressmanager: testAddressManager
+	@echo "=== Ejecutando testAddressManager ==="
+	./testAddressManager
+
+test-transaction: testTransaction
+	@echo "=== Ejecutando testTransaction ==="
+	./testTransaction
+
 # Reglas existentes
-test-%: %
+run-%: %
 	@echo "=== Ejecutando $< ==="
 	./$<
-
-run-%: test-%
-	@echo "Test $* completado"
 
 clean:
 	rm -f $(TEST_TARGETS)
 
-.PHONY: all build test clean test-file test-specific
+.PHONY: all build test clean test-file test-specific \
+        test-blockheader test-cryptobase test-keymanager test-signaturemanager \
+        test-addressmanager test-transaction

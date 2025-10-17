@@ -3,35 +3,46 @@
 
 #include "Types.hpp"
 #include "CryptoBase.hpp"
-
-using namespace std;
+#include "KeyManager.hpp"
+#include <vector>
+#include <string>
+#include <cstdint>
+#include <stdexcept>
+#include <algorithm>
 
 class SignatureManager {
-public:
+public:    
     // Inicialización (solo una vez al inicio del programa)
     static bool initialize();
     
-    // Firma
-    static string signMessage(const string& privateKey, const string& message);
-    static vector<uint8_t> signMessage(const vector<uint8_t>& privateKey, 
-                                     const vector<uint8_t>& message);
+    // Firma - versiones seguras
+    static bool signMessage(const std::vector<uint8_t>& privateKey,
+                          const std::vector<uint8_t>& message,
+                          std::vector<uint8_t>& signature);
     
-    // Verificación - NOMBRES DIFERENTES para evitar ambigüedad
-    static bool verifySignature(const string& publicKey, 
-                              const vector<uint8_t>& message, 
-                              const string& signatureBase64);
-                
-    static bool verifySignature(const vector<uint8_t>& publicKey,
-                              const vector<uint8_t>& message,
-                              const vector<uint8_t>& signature);
+    static std::string signMessageEncoded(const std::string& privateKeyBase64,
+                                        const std::vector<uint8_t>& message);
     
-    static bool verifySignatureString(const string& publicKey, 
-                                    const string& message, 
-                                    const string& signatureBase64);
+    // Verificación - API unificada y segura
+    static bool verifySignature(const std::vector<uint8_t>& publicKey,
+                              const std::vector<uint8_t>& message,
+                              const std::vector<uint8_t>& signature);
     
-    static bool verifySignatureHex(const string& publicKey, 
-                                 const string& messageHex, 
-                                 const string& signatureBase64);
+    static bool verifySignatureEncoded(const std::string& publicKeyBase64,
+                                     const std::vector<uint8_t>& message,
+                                     const std::string& signatureBase64);
+    
+    // Utilidades de validación
+    static bool isValidSignature(const std::vector<uint8_t>& signature);
+    static bool isValidSignatureEncoded(const std::string& signatureBase64);
+
+    static void secureClean(std::vector<uint8_t>& sensitiveData);
+
+private:
+    // Helpers internos
+    static bool validateInputSizes(const std::vector<uint8_t>& publicKey,
+                                 const std::vector<uint8_t>& privateKey,
+                                 const std::vector<uint8_t>& signature);
 };
 
 #endif // SIGNATURE_MANAGER_H

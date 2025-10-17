@@ -3,24 +3,31 @@
 
 #include "CryptoBase.hpp"
 #include "Types.hpp"
+#include <vector>
+#include <string>
+#include <cstdint>
 #include <algorithm>
-
-using namespace std;
+#include <stdexcept>
+#include <iostream>
 
 class KeyManager {
 public:
-    // Generación de claves - ahora delega a CryptoBase
-    static bool generateKeyPair(string& privateKey, string& publicKey);
-    static bool generateKeyPair(vector<uint8_t>& privateKey, vector<uint8_t>& publicKey);
+    // Generación de claves - versiones seguras
+    static bool generateKeyPairSecure(std::string& privateKeyEncoded, std::string& publicKeyEncoded);
+    static bool generateKeyPair(std::vector<uint8_t>& privateKey, std::vector<uint8_t>& publicKey);
     
     // Derivación de clave pública desde privada
-    static string derivePublicKey(const string& privateKeyBase64);
+    static bool derivePublicKey(const std::vector<uint8_t>& privateKey, std::vector<uint8_t>& publicKey);
+    static std::string derivePublicKeyFromEncoded(const std::string& privateKeyBase64);
     
-    // Validación simplificada
-    static bool isValidPrivateKey(const string& privateKey);
-    static bool isValidPublicKey(const string& publicKey);
+    // Validación robusta
+    static bool isValidPrivateKey(const std::vector<uint8_t>& privateKey);
+    static bool isValidPublicKey(const std::vector<uint8_t>& publicKey);
+    static bool isValidPrivateKeyEncoded(const std::string& privateKey);
+    static bool isValidPublicKeyEncoded(const std::string& publicKey);
     
-    // ¡No más funciones complejas de OpenSSL!
+    // Utilidades de seguridad
+    static void secureClean(std::vector<uint8_t>& sensitiveData);
 };
 
 #endif // KEY_MANAGER_H

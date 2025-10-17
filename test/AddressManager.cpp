@@ -1,33 +1,100 @@
 #include "AddressManager.hpp"
 
-string AddressManager::getAddressFromPublicKey(const string& publicKey) {
-    vector<uint8_t> publicKeyBytes = CryptoBase::base64Decode(publicKey);
-    return getAddressFromPublicKey(publicKeyBytes);
+std::string AddressManager::getAddressFromPublicKey(const std::vector<uint8_t>& publicKey) {
+    // Validación exhaustiva de la clave pública
+    if (!KeyManager::isValidPublicKey(publicKey)) {
+        throw std::invalid_argument("Invalid public key format");
+    }
+    
+    // Calcular SHA-256 de la clave pública
+    std::vector<uint8_t> hash = CryptoBase::sha256Bytes(publicKey);
+    
+    // Verificar que el hash tenga tamaño suficiente
+    if (hash.size() < ADDRESS_SIZE) {
+        throw std::runtime_error("SHA-256 hash too short for address derivation");
+    }
+    
+    // Tomar los últimos 20 bytes para la dirección (estilo Ethereum)
+    std::vector<uint8_t> addressBytes(hash.end() - ADDRESS_SIZE, hash.end());
+    
+    // Convertir a hexadecimal
+    std::string address = CryptoBase::hexEncode(addressBytes);
+    
+    // Verificar que la dirección generada sea válida
+    if (!isValidAddress(address)) {
+        throw std::runtime_error("Generated address is invalid");
+    }
+    
+    return address;
 }
 
-string AddressManager::getAddressFromPublicKey(const vector<uint8_t>& publicKey) {
-    // ¡Validación simple! Ed25519 son 32 bytes
-    if (publicKey.size() != 32) return "";
+std::string AddressManager::getAddressFromEncodedPublicKey(const std::string& publicKeyBase64) {
+    // Validación de entrada
+    if (publicKeyBase64.empty()) {
+        throw std::invalid_argument("Empty public key provided");
+    }
     
-    // SHA-256 de la clave pública y tomar últimos 20 bytes
-    // (Estilo Ethereum pero con Ed25519)
-    auto hash = CryptoBase::sha256Bytes(publicKey);
-    vector<uint8_t> addressBytes(hash.end() - 20, hash.end());
+    std::vector<uint8_t> publicKeyBytes;
+    try {
+        publicKeyBytes = CryptoBase::base64Decode(publicKeyBase64);
+    } catch (const std::exception& e) {
+        throw std::invalid_argument("Failed to decode public key: " + std::string(e.what()));
+    }
     
-    return CryptoBase::hexEncode(addressBytes);
+    // Generar dirección
+    std::string address = getAddressFromPublicKey(publicKeyBytes);
+    
+    // Limpiar memoria sensible
+    CryptoBase::secureClean(publicKeyBytes);
+    
+    return address;
 }
 
-string AddressManager::publicKeyToAddress(const string& publicKeyBase64) {
-    // ¡Sin caché necesaria! La operación es muy rápida ahora
-    return getAddressFromPublicKey(publicKeyBase64);
+bool AddressManager::isValidAddress(const std::string& address) {
+    // Validación de formato básico
+    if (!validateAddressFormat(address)) {
+        return false;
+    }
+    
+    // Validación adicional: checksum (opcional para Ethereum-style addresses)
+    // En una implementación completa, se podría implementar checksum EIP-55
+    return true;
 }
 
-bool AddressManager::isValidAddress(const string& address) {
-    // Dirección debe ser hexadecimal de 40 caracteres (20 bytes)
-    if (address.length() != 40) return false;
+std::string AddressManager::normalizeAddress(const std::string& address) {
+    if (!isValidAddress(address)) {
+        throw std::invalid_argument("Cannot normalize invalid address");
+    }
     
-    // Todos los caracteres deben ser hexadecimales
-    return all_of(address.begin(), address.end(), [](unsigned char c) {
-        return isxdigit(c);
-    });
+    // Convertir a minúsculas para consistencia
+    // Nota: En Ethereum se usaría checksum EIP-55, pero para simplicidad usamos minúsculas
+    std::string normalized = address;
+    std::transform(normalized.begin(), normalized.end(), normalized.begin(),
+                  [](unsigned char c) { return std::tolower(c); });
+    
+    return normalized;
+}
+
+bool AddressManager::validateAddressFormat(const std::string& address) {
+    // Check if address is exactly 40 characters (20 bytes in hex)
+    if (address.length() != ADDRESS_HEX_LENGTH) {
+        return false;
+    }
+    
+    // Check if all characters are valid hex digits
+    for (char c : address) {
+        if (!std::isxdigit(static_cast<unsigned char>(c))) {
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+void AddressManager::secureClean(std::vector<uint8_t>& sensitiveData) {
+    CryptoBase::secureClean(sensitiveData);
+}
+
+void AddressManager::secureClean(std::string& sensitiveData) {
+    CryptoBase::secureClean(sensitiveData);
 }

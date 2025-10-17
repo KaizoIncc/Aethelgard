@@ -1,0 +1,1198 @@
+Ejecutando todos los tests...
+=== Ejecutando test_Block ===
+Running main() from ./googletest/src/gtest_main.cc
+[==========] Running 35 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 35 tests from BlockTest
+[ RUN      ] BlockTest.ConstructorDefault
+DEBUG Addresses - From: 5d3b5503a6535a5756a30e899d83a8ff8a16ebae | To: 7dcce2fe303dfe3c4ad349fe14a53f54543b7181 | Same: NO
+[METRICS] BlockTest completed - Duration: 10ms
+[METRIC] constructor_default_ms: 13
+[METRIC] total_test_duration_ms: 10
+[       OK ] BlockTest.ConstructorDefault (11 ms)
+[ RUN      ] BlockTest.ConstructorGenesisBlock
+DEBUG Addresses - From: b6bd3c0ea45161b607203c0949f17d18a8919c24 | To: a395d9bc852c2764030e5e8b643701874812066d | Same: NO
+[METRICS] BlockTest completed - Duration: 10ms
+[METRIC] constructor_genesis_ms: 15
+[METRIC] total_test_duration_ms: 10
+[       OK ] BlockTest.ConstructorGenesisBlock (11 ms)
+[ RUN      ] BlockTest.ConstructorNormalBlock
+DEBUG Addresses - From: 6ac818b7e897baaf67ca52eed2f1d14d64f5e0ec | To: c5d9bfc5ca0ab5504b83637d3166b5578b25a34d | Same: NO
+[METRICS] BlockTest completed - Duration: 10ms
+[METRIC] constructor_normal_ms: 12
+[METRIC] total_test_duration_ms: 10
+[       OK ] BlockTest.ConstructorNormalBlock (11 ms)
+[ RUN      ] BlockTest.ConstructorNegativeIndexThrowsException
+DEBUG Addresses - From: 756c0eedc04e407b156b8cc2f11cd45cfd6fd28c | To: 4dfdeb0f106752399fafabb6998b35db5c3cfaaa | Same: NO
+[METRICS] BlockTest completed - Duration: 10ms
+[METRIC] total_test_duration_ms: 10
+[       OK ] BlockTest.ConstructorNegativeIndexThrowsException (11 ms)
+[ RUN      ] BlockTest.AddValidTransaction
+DEBUG Addresses - From: c80cdb73a39957ba1d1ff250945b239f8e6cf751 | To: 95c1d04298c9e7b4344ec13be09ca00284e82a5e | Same: NO
+DEBUG: Test completed successfully
+[METRICS] BlockTest completed - Duration: 11ms
+[METRIC] add_valid_transaction_ms: 170
+[METRIC] total_test_duration_ms: 11
+[       OK ] BlockTest.AddValidTransaction (12 ms)
+[ RUN      ] BlockTest.AddInvalidTransactionFails
+DEBUG Addresses - From: 0fed0921c37e98d60880fd23d2626c0cb4edd2a1 | To: 83c7b5c019d1c9802fe44e2bb16ecee16eb90e98 | Same: NO
+Error: Transaction is not signed
+Error: Cannot add invalid transaction to block
+[METRICS] BlockTest completed - Duration: 11ms
+[METRIC] total_test_duration_ms: 11
+[       OK ] BlockTest.AddInvalidTransactionFails (11 ms)
+[ RUN      ] BlockTest.AddMultipleTransactions
+DEBUG Addresses - From: 712b3e2741230b994871ebdd761f09a9409d7d87 | To: 0aeb12ee624764fa2178c37b6f434f2818200202 | Same: NO
+[METRICS] BlockTest completed - Duration: 11ms
+[METRIC] total_test_duration_ms: 11
+[       OK ] BlockTest.AddMultipleTransactions (12 ms)
+[ RUN      ] BlockTest.TransactionOrderPreserved
+DEBUG Addresses - From: 0b4d999d61e9ef1e3ed4cff78d5a55a1bde4b027 | To: 0ffadf296abc956d863343b81c74c560e7231d6b | Same: NO
+[METRICS] BlockTest completed - Duration: 10ms
+[METRIC] total_test_duration_ms: 10
+[       OK ] BlockTest.TransactionOrderPreserved (11 ms)
+[ RUN      ] BlockTest.CalculateMerkleRootEmptyBlock
+DEBUG Addresses - From: be71fb4daf245c5cf04f71e589f0a53ac5468e21 | To: 0d0945eb602e2573d9dc576b73d11738488f2be8 | Same: NO
+[METRICS] BlockTest completed - Duration: 10ms
+[METRIC] total_test_duration_ms: 10
+[       OK ] BlockTest.CalculateMerkleRootEmptyBlock (10 ms)
+[ RUN      ] BlockTest.CalculateMerkleRootSingleTransaction
+DEBUG Addresses - From: 33a720974c829ebf19524804e1a26c096e42785e | To: f477e8f0c42ffe138ac6ce14b139c86552894dee | Same: NO
+[METRICS] BlockTest completed - Duration: 10ms
+[METRIC] total_test_duration_ms: 10
+[       OK ] BlockTest.CalculateMerkleRootSingleTransaction (11 ms)
+[ RUN      ] BlockTest.CalculateMerkleRootMultipleTransactions
+DEBUG Addresses - From: 958dd3840946749944de1c9e18cff9ae8a5549ed | To: f3a68f5c816ca94b51a3d7aadea3627369a821b5 | Same: NO
+[METRICS] BlockTest completed - Duration: 10ms
+[METRIC] total_test_duration_ms: 10
+[       OK ] BlockTest.CalculateMerkleRootMultipleTransactions (11 ms)
+[ RUN      ] BlockTest.CalculateMerkleRootOddNumberOfTransactions
+DEBUG Addresses - From: ca2647f17ac4f7cc7955edf93e8d52767530dd8c | To: b0582d0284801aa7f5e353991bbd9261433849f3 | Same: NO
+[METRICS] BlockTest completed - Duration: 10ms
+[METRIC] total_test_duration_ms: 10
+[       OK ] BlockTest.CalculateMerkleRootOddNumberOfTransactions (11 ms)
+[ RUN      ] BlockTest.MerkleRootChangesWithTransactionOrder
+DEBUG Addresses - From: c9f64b57e6886cf20eb7196752779f65978d16e1 | To: de24ba262fb947d335580e680af3d25452541f9b | Same: NO
+[METRICS] BlockTest completed - Duration: 10ms
+[METRIC] total_test_duration_ms: 10
+[       OK ] BlockTest.MerkleRootChangesWithTransactionOrder (11 ms)
+[ RUN      ] BlockTest.CalculateBlockHashEmptyBlock
+DEBUG Addresses - From: 029eca485fec7aa85f04eaeeb396dec42f4de795 | To: 1d05525dccc7aa87b443e0e55f8db7cf07b9c418 | Same: NO
+[METRICS] BlockTest completed - Duration: 10ms
+[METRIC] total_test_duration_ms: 10
+[       OK ] BlockTest.CalculateBlockHashEmptyBlock (10 ms)
+[ RUN      ] BlockTest.CalculateBlockHashWithTransactions
+DEBUG Addresses - From: 36b4be59deda565b76bcb4cf528c447c33969704 | To: a38d9f9d709c6b527ef5eb19ed778b18027d6e82 | Same: NO
+[METRICS] BlockTest completed - Duration: 10ms
+[METRIC] total_test_duration_ms: 10
+[       OK ] BlockTest.CalculateBlockHashWithTransactions (11 ms)
+[ RUN      ] BlockTest.BlockHashChangesWithTransactions
+DEBUG Addresses - From: 5972bb5ae4c27f5fe9a48d39d7d793b019a5293f | To: 13fed4e1946a64bd561f681c5687f7f7c34b7d43 | Same: NO
+[METRICS] BlockTest completed - Duration: 10ms
+[METRIC] total_test_duration_ms: 10
+[       OK ] BlockTest.BlockHashChangesWithTransactions (11 ms)
+[ RUN      ] BlockTest.BlockHashChangesWithMerkleRoot
+DEBUG Addresses - From: 89658072919faa1993162522a1be731a7670e277 | To: 8e7a49cd23f54eb02f8b1a8d96fbe879a57234cf | Same: NO
+[METRICS] BlockTest completed - Duration: 10ms
+[METRIC] total_test_duration_ms: 10
+[       OK ] BlockTest.BlockHashChangesWithMerkleRoot (11 ms)
+[ RUN      ] BlockTest.BlockHashConsistency
+DEBUG Addresses - From: 1ba867a5fef77a0f51b258f705570d31b08b4273 | To: 252cee2064db048d424f30892b7ff81238770de0 | Same: NO
+[METRICS] BlockTest completed - Duration: 10ms
+[METRIC] total_test_duration_ms: 10
+[       OK ] BlockTest.BlockHashConsistency (10 ms)
+[ RUN      ] BlockTest.IsValidEmptyBlock
+DEBUG Addresses - From: b67cdf4e1e6e74b72298defcfcacb2efca0c5922 | To: 1cac319478d4b4db92e164d22abf168415f915b6 | Same: NO
+[METRICS] BlockTest completed - Duration: 10ms
+[METRIC] total_test_duration_ms: 10
+[       OK ] BlockTest.IsValidEmptyBlock (10 ms)
+[ RUN      ] BlockTest.IsValidBlockWithTransactions
+DEBUG Addresses - From: d988d1bfad182133c42a7f99a7051962086dad54 | To: b133ef92ee2166a19b18c79f1c40b442fec0e416 | Same: NO
+[METRICS] BlockTest completed - Duration: 10ms
+[METRIC] total_test_duration_ms: 10
+[       OK ] BlockTest.IsValidBlockWithTransactions (11 ms)
+[ RUN      ] BlockTest.IsValidGenesisBlock
+DEBUG Addresses - From: eea49a973c47b90f50ac1101b58713a749fc9f16 | To: 814dc80bcd9c434fddede59409c0d0e16498b1d8 | Same: NO
+[METRICS] BlockTest completed - Duration: 10ms
+[METRIC] total_test_duration_ms: 10
+[       OK ] BlockTest.IsValidGenesisBlock (11 ms)
+[ RUN      ] BlockTest.IsValidFailsWithInvalidTransaction
+DEBUG Addresses - From: 218c7aaab70654f03d6ca1912e9ff03ed6423a2f | To: dbf71516ad2dffe77a9432a30102840bf91bd6f7 | Same: NO
+Error: Transaction is not signed
+Error: Block contains invalid transaction
+[METRICS] BlockTest completed - Duration: 11ms
+[METRIC] total_test_duration_ms: 11
+[       OK ] BlockTest.IsValidFailsWithInvalidTransaction (12 ms)
+[ RUN      ] BlockTest.IsValidFailsWithTamperedHeaderHash
+DEBUG Addresses - From: 994ef2cdf15b2cbbc1fa99c4aa72fc626526244f | To: b258a6b1c905921046820835f45815e2b0b9d382 | Same: NO
+Error: Block header hash mismatch
+[METRICS] BlockTest completed - Duration: 10ms
+[METRIC] total_test_duration_ms: 10
+[       OK ] BlockTest.IsValidFailsWithTamperedHeaderHash (11 ms)
+[ RUN      ] BlockTest.IsValidFailsWithTamperedMerkleRoot
+DEBUG Addresses - From: 249bf585524b3cc4e29ade94f0d35b40a1e9d49a | To: 3b8f882d36630af83f86cc9d52de056545113f95 | Same: NO
+Error: Block header hash mismatch
+[METRICS] BlockTest completed - Duration: 11ms
+[METRIC] total_test_duration_ms: 11
+[       OK ] BlockTest.IsValidFailsWithTamperedMerkleRoot (11 ms)
+[ RUN      ] BlockTest.IsValidFailsWithInvalidPreviousHashForNormalBlock
+DEBUG Addresses - From: 61746b524a3f54cbe4ae03e675c7c00852211804 | To: ab73a13980a6284a834b45db21567cc82036065c | Same: NO
+[METRICS] BlockTest completed - Duration: 10ms
+[METRIC] total_test_duration_ms: 10
+[       OK ] BlockTest.IsValidFailsWithInvalidPreviousHashForNormalBlock (11 ms)
+[ RUN      ] BlockTest.HasSpaceForTransactionWithinLimits
+DEBUG Addresses - From: 30331e56ecb8b6f73ca028cfff7dc2887b276334 | To: da5d7c495850410367c0b61920592378e279d7fb | Same: NO
+[METRICS] BlockTest completed - Duration: 10ms
+[METRIC] total_test_duration_ms: 10
+[       OK ] BlockTest.HasSpaceForTransactionWithinLimits (11 ms)
+[ RUN      ] BlockTest.TransactionCountLimit
+DEBUG Addresses - From: a8c956e29e7e0d6fd336423dc14514a340c00c4c | To: 1a76527a08273628988b3923d7bc0b9bc6733928 | Same: NO
+Error: Block has no space for additional transaction
+[METRICS] BlockTest completed - Duration: 1069ms
+[METRIC] total_test_duration_ms: 1069
+[       OK ] BlockTest.TransactionCountLimit (1069 ms)
+[ RUN      ] BlockTest.BlockSizeEstimation
+DEBUG Addresses - From: 8cc21f1073d187b2dd63d5e9658a33c0673dd5f7 | To: 9ec91699d0c696e9e98227fce531e1141de8abae | Same: NO
+[METRICS] BlockTest completed - Duration: 10ms
+[METRIC] total_test_duration_ms: 10
+[       OK ] BlockTest.BlockSizeEstimation (11 ms)
+[ RUN      ] BlockTest.BlockSizeLimitRespected
+DEBUG Addresses - From: 78ff86e9a880893d571586c3a9f7e26355388b0f | To: e354f8c1fa7d90d340d8412e1c0c9dfc00ff36bd | Same: NO
+[METRICS] BlockTest completed - Duration: 31ms
+[METRIC] total_test_duration_ms: 31
+[       OK ] BlockTest.BlockSizeLimitRespected (31 ms)
+[ RUN      ] BlockTest.SetHeaderAndTransactions
+DEBUG Addresses - From: 6231513fea4b55ecd90d7c4e4156aca00d902412 | To: dcef5e82d7048dde00bbc380c15f571da1b9d4d4 | Same: NO
+[METRICS] BlockTest completed - Duration: 10ms
+[METRIC] total_test_duration_ms: 10
+[       OK ] BlockTest.SetHeaderAndTransactions (11 ms)
+[ RUN      ] BlockTest.SetTransactionsUpdatesHash
+DEBUG Addresses - From: 649a0f9103ff9607108ec5340613850a66c040bd | To: 32e4b5e59159a64fe9e126949cada971cc56941b | Same: NO
+[METRICS] BlockTest completed - Duration: 10ms
+[METRIC] total_test_duration_ms: 10
+[       OK ] BlockTest.SetTransactionsUpdatesHash (10 ms)
+[ RUN      ] BlockTest.PerformanceMultipleBlockCreations
+DEBUG Addresses - From: 8f29a6d6078b354210f373ddd77867d0be4256e6 | To: 2b3a9941cc3d90081e1ad87b6c461ed3acdc0afb | Same: NO
+[PERFORMANCE] Created 100 blocks in 0ms
+[METRICS] BlockTest completed - Duration: 10ms
+[METRIC] multiple_block_creations_throughput_ops_per_sec: inf
+[METRIC] multiple_block_creations_total: 100
+[METRIC] total_test_duration_ms: 10
+[       OK ] BlockTest.PerformanceMultipleBlockCreations (11 ms)
+[ RUN      ] BlockTest.PerformanceMerkleRootCalculation
+DEBUG Addresses - From: 745eebd59d97714358f686f4e6bf92cb6147a006 | To: 140d797f57c612e4e4741691bee172000d1f0956 | Same: NO
+[METRICS] BlockTest completed - Duration: 33ms
+[METRIC] merkle_root_calculation_us: 244
+[METRIC] merkle_root_tx_count: 100
+[METRIC] total_test_duration_ms: 33
+[       OK ] BlockTest.PerformanceMerkleRootCalculation (34 ms)
+[ RUN      ] BlockTest.PerformanceBlockValidation
+DEBUG Addresses - From: 918ec402c46f4018ce1f0234266ca1a4863a1c1c | To: b1be3b122dfeeb1373202bbf8f63c68544ce144c | Same: NO
+[METRICS] BlockTest completed - Duration: 61ms
+[METRIC] block_validation_throughput_ops_per_sec: 1020.41
+[METRIC] total_test_duration_ms: 61
+[       OK ] BlockTest.PerformanceBlockValidation (78 ms)
+[ RUN      ] BlockTest.StressTestLargeBlock
+DEBUG Addresses - From: 1008082c8195c48e74f983201bad91a8eced559f | To: e0a6c97db861cce89acde996eef5aca9161ec7eb | Same: NO
+[STRESS_TEST] Added 100 transactions in 31ms
+[METRICS] BlockTest completed - Duration: 48ms
+[METRIC] stress_test_duration_ms: 31
+[METRIC] stress_test_tx_count: 100
+[METRIC] total_test_duration_ms: 48
+[       OK ] BlockTest.StressTestLargeBlock (49 ms)
+[----------] 35 tests from BlockTest (1619 ms total)
+
+[----------] Global test environment tear-down
+[==========] 35 tests from 1 test suite ran. (1620 ms total)
+[  PASSED  ] 35 tests.
+
+=== Ejecutando test_BlockHeader ===
+Running main() from ./googletest/src/gtest_main.cc
+[==========] Running 27 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 27 tests from BlockHeaderTest
+[ RUN      ] BlockHeaderTest.ConstructorGenesisBlock
+[METRICS] BlockHeaderTest completed - Duration: 0ms
+[METRIC] constructor_genesis_ms: 3
+[       OK ] BlockHeaderTest.ConstructorGenesisBlock (0 ms)
+[ RUN      ] BlockHeaderTest.ConstructorNormalBlock
+[METRICS] BlockHeaderTest completed - Duration: 0ms
+[METRIC] constructor_normal_ms: 2
+[       OK ] BlockHeaderTest.ConstructorNormalBlock (0 ms)
+[ RUN      ] BlockHeaderTest.ConstructorWithHighIndex
+[METRICS] BlockHeaderTest completed - Duration: 0ms
+[       OK ] BlockHeaderTest.ConstructorWithHighIndex (0 ms)
+[ RUN      ] BlockHeaderTest.ConstructorNegativeIndexThrowsException
+[METRICS] BlockHeaderTest completed - Duration: 0ms
+[       OK ] BlockHeaderTest.ConstructorNegativeIndexThrowsException (0 ms)
+[ RUN      ] BlockHeaderTest.ConstructorInvalidPreviousHashForGenesis
+[METRICS] BlockHeaderTest completed - Duration: 0ms
+[       OK ] BlockHeaderTest.ConstructorInvalidPreviousHashForGenesis (0 ms)
+[ RUN      ] BlockHeaderTest.ConstructorInvalidPreviousHashForNormalBlock
+[METRICS] BlockHeaderTest completed - Duration: 0ms
+[       OK ] BlockHeaderTest.ConstructorInvalidPreviousHashForNormalBlock (0 ms)
+[ RUN      ] BlockHeaderTest.GettersReturnCorrectValues
+[METRICS] BlockHeaderTest completed - Duration: 0ms
+[       OK ] BlockHeaderTest.GettersReturnCorrectValues (0 ms)
+[ RUN      ] BlockHeaderTest.HexConversions
+[METRICS] BlockHeaderTest completed - Duration: 0ms
+[       OK ] BlockHeaderTest.HexConversions (0 ms)
+[ RUN      ] BlockHeaderTest.HexConversionConsistency
+[METRICS] BlockHeaderTest completed - Duration: 0ms
+[       OK ] BlockHeaderTest.HexConversionConsistency (0 ms)
+[ RUN      ] BlockHeaderTest.SetMerkleRootValid
+[METRICS] BlockHeaderTest completed - Duration: 0ms
+[       OK ] BlockHeaderTest.SetMerkleRootValid (0 ms)
+[ RUN      ] BlockHeaderTest.SetHashValid
+[METRICS] BlockHeaderTest completed - Duration: 0ms
+[       OK ] BlockHeaderTest.SetHashValid (0 ms)
+[ RUN      ] BlockHeaderTest.IsValidHashMethod
+[METRICS] BlockHeaderTest completed - Duration: 0ms
+[       OK ] BlockHeaderTest.IsValidHashMethod (0 ms)
+[ RUN      ] BlockHeaderTest.IsValidTimestamp
+[METRICS] BlockHeaderTest completed - Duration: 0ms
+[       OK ] BlockHeaderTest.IsValidTimestamp (0 ms)
+[ RUN      ] BlockHeaderTest.IsValidTimestampEdgeCases
+[METRICS] BlockHeaderTest completed - Duration: 0ms
+[       OK ] BlockHeaderTest.IsValidTimestampEdgeCases (0 ms)
+[ RUN      ] BlockHeaderTest.HasValidHashesGenesis
+[METRICS] BlockHeaderTest completed - Duration: 0ms
+[       OK ] BlockHeaderTest.HasValidHashesGenesis (0 ms)
+[ RUN      ] BlockHeaderTest.HasValidHashesNormalBlock
+[METRICS] BlockHeaderTest completed - Duration: 0ms
+[       OK ] BlockHeaderTest.HasValidHashesNormalBlock (0 ms)
+[ RUN      ] BlockHeaderTest.IsValidMethod
+[METRICS] BlockHeaderTest completed - Duration: 0ms
+[       OK ] BlockHeaderTest.IsValidMethod (0 ms)
+[ RUN      ] BlockHeaderTest.ToStringMethod
+[METRICS] BlockHeaderTest completed - Duration: 0ms
+[       OK ] BlockHeaderTest.ToStringMethod (0 ms)
+[ RUN      ] BlockHeaderTest.ToBytesMethod
+[METRICS] BlockHeaderTest completed - Duration: 0ms
+[       OK ] BlockHeaderTest.ToBytesMethod (0 ms)
+[ RUN      ] BlockHeaderTest.ToBytesConsistency
+[METRICS] BlockHeaderTest completed - Duration: 0ms
+[       OK ] BlockHeaderTest.ToBytesConsistency (0 ms)
+[ RUN      ] BlockHeaderTest.PerformanceMultipleCreations
+[PERFORMANCE] Created 1000 blocks in 0ms
+[PERFORMANCE] Throughput: inf blocks/sec
+[METRICS] BlockHeaderTest completed - Duration: 1ms
+[METRIC] multiple_creations_throughput_ops_per_sec: inf
+[METRIC] multiple_creations_total: 1000
+[METRIC] total_test_duration_ms: 1
+[       OK ] BlockHeaderTest.PerformanceMultipleCreations (1 ms)
+[ RUN      ] BlockHeaderTest.PerformanceSerialization
+[METRICS] BlockHeaderTest completed - Duration: 3ms
+[METRIC] serialization_throughput_ops_per_sec: 333333
+[METRIC] serialization_total_operations: 1000
+[METRIC] total_test_duration_ms: 3
+[       OK ] BlockHeaderTest.PerformanceSerialization (3 ms)
+[ RUN      ] BlockHeaderTest.CopyAndMoveSemantics
+[METRICS] BlockHeaderTest completed - Duration: 0ms
+[       OK ] BlockHeaderTest.CopyAndMoveSemantics (0 ms)
+[ RUN      ] BlockHeaderTest.StressTestLargeBlockchain
+[METRICS] BlockHeaderTest completed - Duration: 3ms
+[METRIC] stress_test_block_count: 100
+[METRIC] stress_test_duration_ms: 2
+[METRIC] stress_test_valid_blocks: 100
+[METRIC] total_test_duration_ms: 3
+[       OK ] BlockHeaderTest.StressTestLargeBlockchain (3 ms)
+[ RUN      ] BlockHeaderTest.MaximumIndexValue
+[METRICS] BlockHeaderTest completed - Duration: 0ms
+[       OK ] BlockHeaderTest.MaximumIndexValue (0 ms)
+[ RUN      ] BlockHeaderTest.HashPatternDetection
+[METRICS] BlockHeaderTest completed - Duration: 0ms
+[       OK ] BlockHeaderTest.HashPatternDetection (0 ms)
+[ RUN      ] BlockHeaderTest.TimestampBoundaryConditions
+[METRICS] BlockHeaderTest completed - Duration: 0ms
+[       OK ] BlockHeaderTest.TimestampBoundaryConditions (0 ms)
+[----------] 27 tests from BlockHeaderTest (20 ms total)
+
+[----------] Global test environment tear-down
+[==========] 27 tests from 1 test suite ran. (20 ms total)
+[  PASSED  ] 27 tests.
+
+=== Ejecutando test_CryptoBase ===
+Running main() from ./googletest/src/gtest_main.cc
+[==========] Running 27 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 27 tests from CryptoBaseTest
+[ RUN      ] CryptoBaseTest.Sha256StringBasic
+[DEBUG] Sha256StringBasic - Actual: 64 | Expected: 64
+[METRICS] CryptoBaseTest completed - Duration: 0ms
+[METRIC] sha256_string_basic_ms: 33
+[       OK ] CryptoBaseTest.Sha256StringBasic (0 ms)
+[ RUN      ] CryptoBaseTest.Sha256VectorBasic
+[METRICS] CryptoBaseTest completed - Duration: 0ms
+[       OK ] CryptoBaseTest.Sha256VectorBasic (0 ms)
+[ RUN      ] CryptoBaseTest.Sha256ConsistencyBetweenOverloads
+[METRICS] CryptoBaseTest completed - Duration: 0ms
+[       OK ] CryptoBaseTest.Sha256ConsistencyBetweenOverloads (0 ms)
+[ RUN      ] CryptoBaseTest.Sha256Deterministic
+[METRICS] CryptoBaseTest completed - Duration: 0ms
+[       OK ] CryptoBaseTest.Sha256Deterministic (0 ms)
+[ RUN      ] CryptoBaseTest.Sha256EmptyInput
+[METRICS] CryptoBaseTest completed - Duration: 0ms
+[       OK ] CryptoBaseTest.Sha256EmptyInput (0 ms)
+[ RUN      ] CryptoBaseTest.Sha256LargeInput
+[METRICS] CryptoBaseTest completed - Duration: 53ms
+[METRIC] sha256_large_input_ms: 52
+[METRIC] total_test_duration_ms: 53
+[       OK ] CryptoBaseTest.Sha256LargeInput (54 ms)
+[ RUN      ] CryptoBaseTest.Sha256SpecialCharacters
+[METRICS] CryptoBaseTest completed - Duration: 0ms
+[       OK ] CryptoBaseTest.Sha256SpecialCharacters (0 ms)
+[ RUN      ] CryptoBaseTest.Base64EncodeDecodeRoundTrip
+[METRICS] CryptoBaseTest completed - Duration: 3ms
+[METRIC] base64_roundtrip_duration_ms: 3
+[METRIC] base64_roundtrip_success_rate: 100
+[METRIC] total_test_duration_ms: 3
+[       OK ] CryptoBaseTest.Base64EncodeDecodeRoundTrip (4 ms)
+[ RUN      ] CryptoBaseTest.Base64EmptyData
+[METRICS] CryptoBaseTest completed - Duration: 0ms
+[       OK ] CryptoBaseTest.Base64EmptyData (0 ms)
+[ RUN      ] CryptoBaseTest.Base64KnownVectors
+[METRICS] CryptoBaseTest completed - Duration: 0ms
+[       OK ] CryptoBaseTest.Base64KnownVectors (0 ms)
+[ RUN      ] CryptoBaseTest.Base64InvalidInputThrowsException
+Base64 decode error: Invalid base64 character: !
+Base64 decode error: Invalid base64 character: $
+[METRICS] CryptoBaseTest completed - Duration: 1ms
+[METRIC] total_test_duration_ms: 1
+[       OK ] CryptoBaseTest.Base64InvalidInputThrowsException (1 ms)
+[ RUN      ] CryptoBaseTest.HexEncodeDecodeRoundTrip
+[METRICS] CryptoBaseTest completed - Duration: 0ms
+[METRIC] hex_roundtrip_ms: 11
+[       OK ] CryptoBaseTest.HexEncodeDecodeRoundTrip (0 ms)
+[ RUN      ] CryptoBaseTest.HexEmptyData
+[METRICS] CryptoBaseTest completed - Duration: 0ms
+[       OK ] CryptoBaseTest.HexEmptyData (0 ms)
+[ RUN      ] CryptoBaseTest.HexKnownVectors
+[METRICS] CryptoBaseTest completed - Duration: 0ms
+[       OK ] CryptoBaseTest.HexKnownVectors (0 ms)
+[ RUN      ] CryptoBaseTest.HexInvalidInputThrowsException
+[METRICS] CryptoBaseTest completed - Duration: 0ms
+[       OK ] CryptoBaseTest.HexInvalidInputThrowsException (0 ms)
+[ RUN      ] CryptoBaseTest.BytesToHexAlias
+[METRICS] CryptoBaseTest completed - Duration: 0ms
+[       OK ] CryptoBaseTest.BytesToHexAlias (0 ms)
+[ RUN      ] CryptoBaseTest.SecureCleanVector
+[METRICS] CryptoBaseTest completed - Duration: 0ms
+[       OK ] CryptoBaseTest.SecureCleanVector (0 ms)
+[ RUN      ] CryptoBaseTest.SecureCleanString
+[METRICS] CryptoBaseTest completed - Duration: 0ms
+[       OK ] CryptoBaseTest.SecureCleanString (0 ms)
+[ RUN      ] CryptoBaseTest.SecureCleanEmptyContainers
+[METRICS] CryptoBaseTest completed - Duration: 0ms
+[       OK ] CryptoBaseTest.SecureCleanEmptyContainers (0 ms)
+[ RUN      ] CryptoBaseTest.SecureCleanLargeData
+[METRICS] CryptoBaseTest completed - Duration: 67ms
+[METRIC] secure_clean_large_data_ms: 67
+[METRIC] total_test_duration_ms: 67
+[       OK ] CryptoBaseTest.SecureCleanLargeData (68 ms)
+[ RUN      ] CryptoBaseTest.Ed25519HelpersWithValidInput
+[METRICS] CryptoBaseTest completed - Duration: 0ms
+[       OK ] CryptoBaseTest.Ed25519HelpersWithValidInput (0 ms)
+[ RUN      ] CryptoBaseTest.Ed25519HelpersWithInvalidInput
+ERROR: Seed must be 32 bytes
+[METRICS] CryptoBaseTest completed - Duration: 0ms
+[       OK ] CryptoBaseTest.Ed25519HelpersWithInvalidInput (0 ms)
+[ RUN      ] CryptoBaseTest.PerformanceBenchmarkHashing
+[PERFORMANCE] SHA-256: 1000 operations in 44ms
+[PERFORMANCE] Throughput: 22727.3 ops/sec
+[METRICS] CryptoBaseTest completed - Duration: 44ms
+[METRIC] hashing_throughput_ops_per_sec: 22727.3
+[METRIC] hashing_total_operations: 1000
+[METRIC] total_test_duration_ms: 44
+[       OK ] CryptoBaseTest.PerformanceBenchmarkHashing (45 ms)
+[ RUN      ] CryptoBaseTest.PerformanceBenchmarkEncoding
+[PERFORMANCE] Encoding: 1000 operations in 49ms
+[METRICS] CryptoBaseTest completed - Duration: 49ms
+[METRIC] encoding_throughput_ops_per_sec: 20408.2
+[METRIC] encoding_total_operations: 1000
+[METRIC] total_test_duration_ms: 49
+[       OK ] CryptoBaseTest.PerformanceBenchmarkEncoding (50 ms)
+[ RUN      ] CryptoBaseTest.MemoryUsageUnderLoad
+[MEMORY] Total memory used: 2396000 bytes
+[MEMORY] Average per operation: 23960 bytes
+[METRICS] CryptoBaseTest completed - Duration: 46ms
+[METRIC] memory_usage_average_per_op: 23960
+[METRIC] memory_usage_total_bytes: 2.396e+06
+[METRIC] total_test_duration_ms: 46
+[       OK ] CryptoBaseTest.MemoryUsageUnderLoad (47 ms)
+[ RUN      ] CryptoBaseTest.IntegratedCryptoWorkflow
+[DEBUG] IntegratedCryptoWorkflow - Actual: Mensaje secreto para transmisión segura | Expected: Mensaje secreto para transmisión segura
+[METRICS] CryptoBaseTest completed - Duration: 0ms
+[METRIC] integrated_workflow_ms: 16
+[       OK ] CryptoBaseTest.IntegratedCryptoWorkflow (0 ms)
+[ RUN      ] CryptoBaseTest.ConsistencyAcrossMultipleRuns
+[METRICS] CryptoBaseTest completed - Duration: 0ms
+[METRIC] consistency_test_runs: 10
+[       OK ] CryptoBaseTest.ConsistencyAcrossMultipleRuns (0 ms)
+[----------] 27 tests from CryptoBaseTest (285 ms total)
+
+[----------] Global test environment tear-down
+[==========] 27 tests from 1 test suite ran. (286 ms total)
+[  PASSED  ] 27 tests.
+
+=== Ejecutando test_KeyManager ===
+Running main() from ./googletest/src/gtest_main.cc
+[==========] Running 27 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 27 tests from KeyManagerTest
+[ RUN      ] KeyManagerTest.GenerateKeyPairBasic
+[METRICS] KeyManagerTest completed - Duration: 0ms
+[METRIC] generate_keypair_basic_ms: 49
+[       OK ] KeyManagerTest.GenerateKeyPairBasic (0 ms)
+[ RUN      ] KeyManagerTest.GenerateKeyPairSecureBasic
+[DEBUG] GenerateKeyPairSecureBasic - Actual: 88 | Expected: 44
+[METRICS] KeyManagerTest completed - Duration: 0ms
+[       OK ] KeyManagerTest.GenerateKeyPairSecureBasic (0 ms)
+[ RUN      ] KeyManagerTest.KeyPairGenerationConsistency
+[METRICS] KeyManagerTest completed - Duration: 0ms
+[METRIC] keypair_uniqueness_tests: 5
+[       OK ] KeyManagerTest.KeyPairGenerationConsistency (0 ms)
+[ RUN      ] KeyManagerTest.DerivePublicKeyFromValidPrivateKey
+[METRICS] KeyManagerTest completed - Duration: 0ms
+[       OK ] KeyManagerTest.DerivePublicKeyFromValidPrivateKey (0 ms)
+[ RUN      ] KeyManagerTest.DerivePublicKeyFromEncodedPrivateKey
+[METRICS] KeyManagerTest completed - Duration: 0ms
+[       OK ] KeyManagerTest.DerivePublicKeyFromEncodedPrivateKey (0 ms)
+[ RUN      ] KeyManagerTest.DerivationConsistency
+[METRICS] KeyManagerTest completed - Duration: 0ms
+[       OK ] KeyManagerTest.DerivationConsistency (0 ms)
+[ RUN      ] KeyManagerTest.ValidateValidPrivateKey
+[METRICS] KeyManagerTest completed - Duration: 0ms
+[       OK ] KeyManagerTest.ValidateValidPrivateKey (0 ms)
+[ RUN      ] KeyManagerTest.ValidateValidPublicKey
+[METRICS] KeyManagerTest completed - Duration: 0ms
+[       OK ] KeyManagerTest.ValidateValidPublicKey (0 ms)
+[ RUN      ] KeyManagerTest.ValidateValidEncodedKeys
+[METRICS] KeyManagerTest completed - Duration: 0ms
+[       OK ] KeyManagerTest.ValidateValidEncodedKeys (0 ms)
+[ RUN      ] KeyManagerTest.PrivateKeyValidationEdgeCases
+[METRICS] KeyManagerTest completed - Duration: 0ms
+[       OK ] KeyManagerTest.PrivateKeyValidationEdgeCases (0 ms)
+[ RUN      ] KeyManagerTest.PublicKeyValidationEdgeCases
+[METRICS] KeyManagerTest completed - Duration: 0ms
+[       OK ] KeyManagerTest.PublicKeyValidationEdgeCases (0 ms)
+[ RUN      ] KeyManagerTest.EncodedKeyValidationEdgeCases
+Base64 decode error: Invalid base64 character: !
+Error validating encoded private key: Invalid base64 character: !
+Base64 decode error: Invalid base64 character: !
+Error validating encoded public key: Invalid base64 character: !
+[METRICS] KeyManagerTest completed - Duration: 1ms
+[METRIC] total_test_duration_ms: 1
+[       OK ] KeyManagerTest.EncodedKeyValidationEdgeCases (1 ms)
+[ RUN      ] KeyManagerTest.GenerateKeyPairWithInvalidBufferSizes
+Error: Invalid buffer sizes. Private: 63, Public: 31
+Error: Invalid buffer sizes. Private: 65, Public: 33
+[METRICS] KeyManagerTest completed - Duration: 1ms
+[METRIC] total_test_duration_ms: 1
+[       OK ] KeyManagerTest.GenerateKeyPairWithInvalidBufferSizes (1 ms)
+[ RUN      ] KeyManagerTest.DerivePublicKeyFromInvalidPrivateKey
+[METRICS] KeyManagerTest completed - Duration: 0ms
+[       OK ] KeyManagerTest.DerivePublicKeyFromInvalidPrivateKey (0 ms)
+[ RUN      ] KeyManagerTest.DerivePublicKeyFromEncodedInvalidPrivateKey
+Base64 decode error: Invalid base64 character: !
+Error decoding private key: Invalid base64 character: !
+[METRICS] KeyManagerTest completed - Duration: 0ms
+[       OK ] KeyManagerTest.DerivePublicKeyFromEncodedInvalidPrivateKey (0 ms)
+[ RUN      ] KeyManagerTest.SecureCleanFunctionality
+[METRICS] KeyManagerTest completed - Duration: 0ms
+[       OK ] KeyManagerTest.SecureCleanFunctionality (0 ms)
+[ RUN      ] KeyManagerTest.MemoryIsCleanedAfterSecureGeneration
+[METRICS] KeyManagerTest completed - Duration: 0ms
+[       OK ] KeyManagerTest.MemoryIsCleanedAfterSecureGeneration (0 ms)
+[ RUN      ] KeyManagerTest.PrivateKeyStructureValidation
+[METRICS] KeyManagerTest completed - Duration: 0ms
+[       OK ] KeyManagerTest.PrivateKeyStructureValidation (0 ms)
+[ RUN      ] KeyManagerTest.NoMemoryLeaksInErrorCases
+Error: Invalid buffer sizes. Private: 63, Public: 31
+Error: Invalid buffer sizes. Private: 63, Public: 31
+Error: Invalid buffer sizes. Private: 63, Public: 31
+Error: Invalid buffer sizes. Private: 63, Public: 31
+Error: Invalid buffer sizes. Private: 63, Public: 31
+Error: Invalid buffer sizes. Private: 63, Public: 31
+Error: Invalid buffer sizes. Private: 63, Public: 31
+Error: Invalid buffer sizes. Private: 63, Public: 31
+Error: Invalid buffer sizes. Private: 63, Public: 31
+Error: Invalid buffer sizes. Private: 63, Public: 31
+[METRICS] KeyManagerTest completed - Duration: 5ms
+[METRIC] total_test_duration_ms: 5
+[       OK ] KeyManagerTest.NoMemoryLeaksInErrorCases (5 ms)
+[ RUN      ] KeyManagerTest.PerformanceKeyGeneration
+[PERFORMANCE] Key Generation: 100 operations in 3ms
+[PERFORMANCE] Success rate: 100%
+[PERFORMANCE] Throughput: 33333.3 ops/sec
+[METRICS] KeyManagerTest completed - Duration: 3ms
+[METRIC] key_generation_success_rate: 100
+[METRIC] key_generation_throughput_ops_per_sec: 33333.3
+[METRIC] key_generation_total_operations: 100
+[METRIC] total_test_duration_ms: 3
+[       OK ] KeyManagerTest.PerformanceKeyGeneration (4 ms)
+[ RUN      ] KeyManagerTest.PerformanceKeyDerivation
+[METRICS] KeyManagerTest completed - Duration: 1ms
+[METRIC] key_derivation_success_rate: 100
+[METRIC] key_derivation_throughput_ops_per_sec: 100000
+[METRIC] total_test_duration_ms: 1
+[       OK ] KeyManagerTest.PerformanceKeyDerivation (2 ms)
+[ RUN      ] KeyManagerTest.PerformanceEncodedKeyGeneration
+[METRICS] KeyManagerTest completed - Duration: 2ms
+[METRIC] encoded_key_generation_success_rate: 100
+[METRIC] encoded_key_generation_throughput_ops_per_sec: 25000
+[METRIC] total_test_duration_ms: 2
+[       OK ] KeyManagerTest.PerformanceEncodedKeyGeneration (2 ms)
+[ RUN      ] KeyManagerTest.IntegrationWithCryptoBase
+[METRICS] KeyManagerTest completed - Duration: 0ms
+[METRIC] integration_with_cryptobase_ms: 26
+[       OK ] KeyManagerTest.IntegrationWithCryptoBase (0 ms)
+[ RUN      ] KeyManagerTest.IntegrationWithAddressManager
+[METRICS] KeyManagerTest completed - Duration: 0ms
+[       OK ] KeyManagerTest.IntegrationWithAddressManager (0 ms)
+[ RUN      ] KeyManagerTest.CompleteKeyManagementWorkflow
+[DEBUG] CompleteKeyManagementWorkflow - Actual: 88 | Expected: 44
+[METRICS] KeyManagerTest completed - Duration: 0ms
+[METRIC] complete_workflow_ms: 57
+[       OK ] KeyManagerTest.CompleteKeyManagementWorkflow (0 ms)
+[ RUN      ] KeyManagerTest.StressTestMultipleGenerations
+[STRESS_TEST] Generated 200/200 key pairs in 8ms
+[METRICS] KeyManagerTest completed - Duration: 9ms
+[METRIC] stress_test_duration_ms: 8
+[METRIC] stress_test_success_rate: 100
+[METRIC] total_test_duration_ms: 9
+[       OK ] KeyManagerTest.StressTestMultipleGenerations (9 ms)
+[ RUN      ] KeyManagerTest.ConsecutiveOperationsStability
+[METRICS] KeyManagerTest completed - Duration: 4ms
+[METRIC] consecutive_operations: 50
+[METRIC] total_test_duration_ms: 4
+[       OK ] KeyManagerTest.ConsecutiveOperationsStability (5 ms)
+[----------] 27 tests from KeyManagerTest (45 ms total)
+
+[----------] Global test environment tear-down
+[==========] 27 tests from 1 test suite ran. (45 ms total)
+[  PASSED  ] 27 tests.
+
+=== Ejecutando test_SignatureManager ===
+Running main() from ./googletest/src/gtest_main.cc
+[==========] Running 32 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 32 tests from SignatureManagerTest
+[ RUN      ] SignatureManagerTest.InitializeSuccess
+[METRICS] SignatureManagerTest completed - Duration: 0ms
+[       OK ] SignatureManagerTest.InitializeSuccess (0 ms)
+[ RUN      ] SignatureManagerTest.SignMessageBasic
+[METRICS] SignatureManagerTest completed - Duration: 0ms
+[METRIC] sign_message_basic_ms: 38
+[       OK ] SignatureManagerTest.SignMessageBasic (0 ms)
+[ RUN      ] SignatureManagerTest.SignMessageEncodedBasic
+[METRICS] SignatureManagerTest completed - Duration: 0ms
+[       OK ] SignatureManagerTest.SignMessageEncodedBasic (0 ms)
+[ RUN      ] SignatureManagerTest.VerifySignatureBasic
+[METRICS] SignatureManagerTest completed - Duration: 0ms
+[METRIC] verify_signature_basic_ms: 51
+[       OK ] SignatureManagerTest.VerifySignatureBasic (0 ms)
+[ RUN      ] SignatureManagerTest.VerifySignatureEncodedBasic
+[METRICS] SignatureManagerTest completed - Duration: 0ms
+[       OK ] SignatureManagerTest.VerifySignatureEncodedBasic (0 ms)
+[ RUN      ] SignatureManagerTest.SignatureVerificationRoundTrip
+[METRICS] SignatureManagerTest completed - Duration: 0ms
+[       OK ] SignatureManagerTest.SignatureVerificationRoundTrip (0 ms)
+[ RUN      ] SignatureManagerTest.SignatureConsistency
+[METRICS] SignatureManagerTest completed - Duration: 0ms
+[       OK ] SignatureManagerTest.SignatureConsistency (0 ms)
+[ RUN      ] SignatureManagerTest.DifferentMessagesProduceDifferentSignatures
+[METRICS] SignatureManagerTest completed - Duration: 0ms
+[       OK ] SignatureManagerTest.DifferentMessagesProduceDifferentSignatures (0 ms)
+[ RUN      ] SignatureManagerTest.DifferentKeysProduceDifferentSignatures
+[METRICS] SignatureManagerTest completed - Duration: 0ms
+[       OK ] SignatureManagerTest.DifferentKeysProduceDifferentSignatures (0 ms)
+[ RUN      ] SignatureManagerTest.SignWithInvalidPrivateKey
+Error: Invalid private key provided to signMessage
+Error: Invalid private key provided to signMessage
+Error: Invalid private key provided to signMessage
+[METRICS] SignatureManagerTest completed - Duration: 0ms
+[       OK ] SignatureManagerTest.SignWithInvalidPrivateKey (1 ms)
+[ RUN      ] SignatureManagerTest.SignWithInvalidEncodedPrivateKey
+Error: Invalid encoded private key provided
+Base64 decode error: Invalid base64 character: !
+Error validating encoded private key: Invalid base64 character: !
+Error: Invalid encoded private key provided
+Error: Invalid encoded private key provided
+[METRICS] SignatureManagerTest completed - Duration: 2ms
+[METRIC] total_test_duration_ms: 2
+[       OK ] SignatureManagerTest.SignWithInvalidEncodedPrivateKey (2 ms)
+[ RUN      ] SignatureManagerTest.SignEmptyMessage
+Error: Cannot sign empty message
+Error: Empty message provided
+[METRICS] SignatureManagerTest completed - Duration: 0ms
+[       OK ] SignatureManagerTest.SignEmptyMessage (0 ms)
+[ RUN      ] SignatureManagerTest.VerifyWithInvalidPublicKey
+Error: Invalid public key provided to verifySignature
+Error: Invalid public key provided to verifySignature
+Error: Invalid public key provided to verifySignature
+[METRICS] SignatureManagerTest completed - Duration: 0ms
+[       OK ] SignatureManagerTest.VerifyWithInvalidPublicKey (0 ms)
+[ RUN      ] SignatureManagerTest.VerifyWithInvalidSignature
+Error: Invalid signature provided to verifySignature
+Error: Invalid signature provided to verifySignature
+Error: Invalid signature provided to verifySignature
+[METRICS] SignatureManagerTest completed - Duration: 0ms
+[       OK ] SignatureManagerTest.VerifyWithInvalidSignature (0 ms)
+[ RUN      ] SignatureManagerTest.VerifyWithWrongPublicKey
+Warning: Signature verification failed - invalid signature
+[METRICS] SignatureManagerTest completed - Duration: 0ms
+[       OK ] SignatureManagerTest.VerifyWithWrongPublicKey (0 ms)
+[ RUN      ] SignatureManagerTest.VerifyWithWrongMessage
+Warning: Signature verification failed - invalid signature
+[METRICS] SignatureManagerTest completed - Duration: 0ms
+[       OK ] SignatureManagerTest.VerifyWithWrongMessage (0 ms)
+[ RUN      ] SignatureManagerTest.VerifyWithTamperedSignature
+Warning: Signature verification failed - invalid signature
+[METRICS] SignatureManagerTest completed - Duration: 0ms
+[       OK ] SignatureManagerTest.VerifyWithTamperedSignature (0 ms)
+[ RUN      ] SignatureManagerTest.IsValidSignatureBasic
+[METRICS] SignatureManagerTest completed - Duration: 0ms
+[       OK ] SignatureManagerTest.IsValidSignatureBasic (0 ms)
+[ RUN      ] SignatureManagerTest.IsValidSignatureEdgeCases
+[METRICS] SignatureManagerTest completed - Duration: 0ms
+[       OK ] SignatureManagerTest.IsValidSignatureEdgeCases (0 ms)
+[ RUN      ] SignatureManagerTest.IsValidSignatureEncodedBasic
+[METRICS] SignatureManagerTest completed - Duration: 0ms
+[       OK ] SignatureManagerTest.IsValidSignatureEncodedBasic (0 ms)
+[ RUN      ] SignatureManagerTest.IsValidSignatureEncodedEdgeCases
+Base64 decode error: Invalid base64 character: !
+Error validating encoded signature: Invalid base64 character: !
+[METRICS] SignatureManagerTest completed - Duration: 1ms
+[METRIC] total_test_duration_ms: 1
+[       OK ] SignatureManagerTest.IsValidSignatureEncodedEdgeCases (1 ms)
+[ RUN      ] SignatureManagerTest.SecureCleanFunctionality
+[METRICS] SignatureManagerTest completed - Duration: 0ms
+[       OK ] SignatureManagerTest.SecureCleanFunctionality (0 ms)
+[ RUN      ] SignatureManagerTest.MemoryIsCleanedAfterEncodedSigning
+[METRICS] SignatureManagerTest completed - Duration: 0ms
+[       OK ] SignatureManagerTest.MemoryIsCleanedAfterEncodedSigning (0 ms)
+[ RUN      ] SignatureManagerTest.NoMemoryLeaksInErrorCases
+Error: Invalid private key provided to signMessage
+Error: Invalid public key provided to verifySignature
+Error: Invalid private key provided to signMessage
+Error: Invalid public key provided to verifySignature
+Error: Invalid private key provided to signMessage
+Error: Invalid public key provided to verifySignature
+Error: Invalid private key provided to signMessage
+Error: Invalid public key provided to verifySignature
+Error: Invalid private key provided to signMessage
+Error: Invalid public key provided to verifySignature
+Error: Invalid private key provided to signMessage
+Error: Invalid public key provided to verifySignature
+Error: Invalid private key provided to signMessage
+Error: Invalid public key provided to verifySignature
+Error: Invalid private key provided to signMessage
+Error: Invalid public key provided to verifySignature
+Error: Invalid private key provided to signMessage
+Error: Invalid public key provided to verifySignature
+Error: Invalid private key provided to signMessage
+Error: Invalid public key provided to verifySignature
+[METRICS] SignatureManagerTest completed - Duration: 5ms
+[METRIC] total_test_duration_ms: 5
+[       OK ] SignatureManagerTest.NoMemoryLeaksInErrorCases (5 ms)
+[ RUN      ] SignatureManagerTest.PerformanceSigning
+[PERFORMANCE] Signing: 50 operations in 3ms
+[PERFORMANCE] Success rate: 100%
+[PERFORMANCE] Throughput: 16666.7 ops/sec
+[METRICS] SignatureManagerTest completed - Duration: 3ms
+[METRIC] signing_success_rate: 100
+[METRIC] signing_throughput_ops_per_sec: 16666.7
+[METRIC] signing_total_operations: 50
+[METRIC] total_test_duration_ms: 3
+[       OK ] SignatureManagerTest.PerformanceSigning (4 ms)
+[ RUN      ] SignatureManagerTest.PerformanceVerification
+[METRICS] SignatureManagerTest completed - Duration: 5ms
+[METRIC] total_test_duration_ms: 5
+[METRIC] verification_success_rate: 100
+[METRIC] verification_throughput_ops_per_sec: 25000
+[       OK ] SignatureManagerTest.PerformanceVerification (5 ms)
+[ RUN      ] SignatureManagerTest.PerformanceEncodedOperations
+[METRICS] SignatureManagerTest completed - Duration: 4ms
+[METRIC] encoded_operations_success_rate: 100
+[METRIC] encoded_operations_throughput_ops_per_sec: 7500
+[METRIC] total_test_duration_ms: 4
+[       OK ] SignatureManagerTest.PerformanceEncodedOperations (5 ms)
+[ RUN      ] SignatureManagerTest.IntegrationWithKeyManager
+[METRICS] SignatureManagerTest completed - Duration: 0ms
+[METRIC] integration_with_keymanager_ms: 136
+[       OK ] SignatureManagerTest.IntegrationWithKeyManager (0 ms)
+[ RUN      ] SignatureManagerTest.IntegrationWithCryptoBase
+[METRICS] SignatureManagerTest completed - Duration: 0ms
+[       OK ] SignatureManagerTest.IntegrationWithCryptoBase (0 ms)
+[ RUN      ] SignatureManagerTest.CompleteSignatureWorkflow
+[METRICS] SignatureManagerTest completed - Duration: 0ms
+[METRIC] complete_workflow_ms: 109
+[       OK ] SignatureManagerTest.CompleteSignatureWorkflow (0 ms)
+[ RUN      ] SignatureManagerTest.StressTestMultipleSignatures
+[STRESS_TEST] Processed 100/100 signatures in 10ms
+[METRICS] SignatureManagerTest completed - Duration: 10ms
+[METRIC] stress_test_duration_ms: 10
+[METRIC] stress_test_success_rate: 100
+[METRIC] total_test_duration_ms: 10
+[       OK ] SignatureManagerTest.StressTestMultipleSignatures (11 ms)
+[ RUN      ] SignatureManagerTest.LargeMessageSigning
+[METRICS] SignatureManagerTest completed - Duration: 36ms
+[METRIC] large_message_signing_ms: 4
+[METRIC] total_test_duration_ms: 36
+[       OK ] SignatureManagerTest.LargeMessageSigning (37 ms)
+[----------] 32 tests from SignatureManagerTest (94 ms total)
+
+[----------] Global test environment tear-down
+[==========] 32 tests from 1 test suite ran. (95 ms total)
+[  PASSED  ] 32 tests.
+
+=== Ejecutando test_AddressManager ===
+Running main() from ./googletest/src/gtest_main.cc
+[==========] Running 16 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 16 tests from AddressManagerTest
+[ RUN      ] AddressManagerTest.GetAddressFromValidPublicKey
+[DEBUG] GetAddressFromValidPublicKey - Actual: 40 | Expected: 40
+[METRICS] Test completed - Duration: 0ms
+[METRIC] basic_address_generation_ms: 38
+[METRIC] total_test_duration_ms: 0
+[       OK ] AddressManagerTest.GetAddressFromValidPublicKey (0 ms)
+[ RUN      ] AddressManagerTest.GetAddressFromEncodedPublicKey
+[METRICS] Test completed - Duration: 0ms
+[METRIC] encoded_address_generation_ms: 39
+[METRIC] total_test_duration_ms: 0
+[       OK ] AddressManagerTest.GetAddressFromEncodedPublicKey (0 ms)
+[ RUN      ] AddressManagerTest.ConsistencyBetweenPublicKeyFormats
+[METRICS] Test completed - Duration: 0ms
+[METRIC] total_test_duration_ms: 0
+[       OK ] AddressManagerTest.ConsistencyBetweenPublicKeyFormats (0 ms)
+[ RUN      ] AddressManagerTest.InvalidPublicKeyThrowsException
+[METRICS] Test completed - Duration: 0ms
+[METRIC] total_test_duration_ms: 0
+[       OK ] AddressManagerTest.InvalidPublicKeyThrowsException (0 ms)
+[ RUN      ] AddressManagerTest.EmptyPublicKeyThrowsException
+[METRICS] Test completed - Duration: 0ms
+[METRIC] total_test_duration_ms: 0
+[       OK ] AddressManagerTest.EmptyPublicKeyThrowsException (0 ms)
+[ RUN      ] AddressManagerTest.InvalidEncodedPublicKeyThrowsException
+Base64 decode error: Invalid base64 character: !
+[METRICS] Test completed - Duration: 0ms
+[METRIC] total_test_duration_ms: 0
+[       OK ] AddressManagerTest.InvalidEncodedPublicKeyThrowsException (0 ms)
+[ RUN      ] AddressManagerTest.NormalizeInvalidAddressThrowsException
+[METRICS] Test completed - Duration: 0ms
+[METRIC] total_test_duration_ms: 0
+[       OK ] AddressManagerTest.NormalizeInvalidAddressThrowsException (0 ms)
+[ RUN      ] AddressManagerTest.AddressFormatValidationEdgeCases
+[METRICS] Test completed - Duration: 0ms
+[METRIC] total_test_duration_ms: 0
+[       OK ] AddressManagerTest.AddressFormatValidationEdgeCases (0 ms)
+[ RUN      ] AddressManagerTest.NormalizationConsistency
+[METRICS] Test completed - Duration: 0ms
+[METRIC] total_test_duration_ms: 0
+[       OK ] AddressManagerTest.NormalizationConsistency (0 ms)
+[ RUN      ] AddressManagerTest.PublicKeyWithMinimumSize
+[METRICS] Test completed - Duration: 0ms
+[METRIC] total_test_duration_ms: 0
+[       OK ] AddressManagerTest.PublicKeyWithMinimumSize (0 ms)
+[ RUN      ] AddressManagerTest.IntegrationWithKeyManager
+[DEBUG] IntegrationWithKeyManager - Actual: 10 | Expected: 10
+[METRICS] Test completed - Duration: 0ms
+[METRIC] integration_duration_ms: 0
+[METRIC] integration_success_rate: 100
+[METRIC] total_test_duration_ms: 0
+[       OK ] AddressManagerTest.IntegrationWithKeyManager (0 ms)
+[ RUN      ] AddressManagerTest.IntegrationWithCryptoBase
+[METRICS] Test completed - Duration: 0ms
+[METRIC] total_test_duration_ms: 0
+[       OK ] AddressManagerTest.IntegrationWithCryptoBase (0 ms)
+[ RUN      ] AddressManagerTest.PerformanceBenchmark
+[PERFORMANCE] Generated 100 addresses in 1ms
+[PERFORMANCE] Average: 0.01ms per operation
+[METRICS] Test completed - Duration: 2ms
+[METRIC] performance_average_time_per_operation_ms: 0.01
+[METRIC] performance_operations_per_second: 100000
+[METRIC] performance_unique_address_rate: 100
+[METRIC] total_test_duration_ms: 2
+[       OK ] AddressManagerTest.PerformanceBenchmark (2 ms)
+[ RUN      ] AddressManagerTest.MemorySafetyValidation
+[METRICS] Test completed - Duration: 0ms
+[METRIC] total_test_duration_ms: 0
+[       OK ] AddressManagerTest.MemorySafetyValidation (0 ms)
+[ RUN      ] AddressManagerTest.DeterministicAddressGeneration
+[METRICS] Test completed - Duration: 0ms
+[METRIC] total_test_duration_ms: 0
+[       OK ] AddressManagerTest.DeterministicAddressGeneration (0 ms)
+[ RUN      ] AddressManagerTest.StressTestMultipleGenerations
+[STRESS_TEST] Success rate: 100%
+[METRICS] Test completed - Duration: 23ms
+[METRIC] stress_test_duration_ms: 22
+[METRIC] stress_test_success_rate: 100
+[METRIC] total_test_duration_ms: 23
+[       OK ] AddressManagerTest.StressTestMultipleGenerations (24 ms)
+[----------] 16 tests from AddressManagerTest (35 ms total)
+
+[----------] Global test environment tear-down
+[==========] 16 tests from 1 test suite ran. (36 ms total)
+[  PASSED  ] 16 tests.
+
+=== Ejecutando test_Transaction ===
+Running main() from ./googletest/src/gtest_main.cc
+[==========] Running 42 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 42 tests from TransactionTest
+[ RUN      ] TransactionTest.ConstructorBasic
+[METRICS] TransactionTest completed - Duration: 0ms
+[METRIC] constructor_basic_ms: 18
+[       OK ] TransactionTest.ConstructorBasic (0 ms)
+[ RUN      ] TransactionTest.ConstructorDefault
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.ConstructorDefault (0 ms)
+[ RUN      ] TransactionTest.ConstructorWithEmptyData
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.ConstructorWithEmptyData (0 ms)
+[ RUN      ] TransactionTest.ConstructorInvalidFromAddressThrowsException
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.ConstructorInvalidFromAddressThrowsException (0 ms)
+[ RUN      ] TransactionTest.ConstructorInvalidToAddressThrowsException
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.ConstructorInvalidToAddressThrowsException (0 ms)
+[ RUN      ] TransactionTest.ConstructorInvalidAmountThrowsException
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.ConstructorInvalidAmountThrowsException (0 ms)
+[ RUN      ] TransactionTest.ConstructorSelfTransactionThrowsException
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.ConstructorSelfTransactionThrowsException (0 ms)
+[ RUN      ] TransactionTest.GettersReturnCorrectValues
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.GettersReturnCorrectValues (0 ms)
+[ RUN      ] TransactionTest.SettersForDeserialization
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.SettersForDeserialization (0 ms)
+[ RUN      ] TransactionTest.HexAndBase64Conversions
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.HexAndBase64Conversions (0 ms)
+[ RUN      ] TransactionTest.SignWithValidPrivateKey
+[METRICS] TransactionTest completed - Duration: 0ms
+[METRIC] sign_with_private_key_ms: 92
+[       OK ] TransactionTest.SignWithValidPrivateKey (0 ms)
+[ RUN      ] TransactionTest.SignFromEncodedPrivateKey
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.SignFromEncodedPrivateKey (0 ms)
+[ RUN      ] TransactionTest.SignWithInvalidPrivateKey
+Error: Invalid private key size for signing: 0 (expected: 64)
+Error: Invalid private key size for signing: 16 (expected: 64)
+Error: Private key is all zeros
+[METRICS] TransactionTest completed - Duration: 1ms
+[METRIC] total_test_duration_ms: 1
+[       OK ] TransactionTest.SignWithInvalidPrivateKey (1 ms)
+[ RUN      ] TransactionTest.SignFromEncodedInvalidPrivateKey
+Error: Empty private key provided for signing
+Base64 decode error: Invalid base64 character: !
+Error decoding private key: Invalid base64 character: !
+Error: Invalid private key size for signing: 16 (expected: 64)
+[METRICS] TransactionTest completed - Duration: 1ms
+[METRIC] total_test_duration_ms: 1
+[       OK ] TransactionTest.SignFromEncodedInvalidPrivateKey (2 ms)
+[ RUN      ] TransactionTest.VerifySignatureWithoutSigning
+Error: Cannot verify empty signature
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.VerifySignatureWithoutSigning (0 ms)
+[ RUN      ] TransactionTest.VerifyTamperedSignature
+Warning: Signature verification failed - invalid signature
+Warning: Transaction signature verification failed
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.VerifyTamperedSignature (0 ms)
+[ RUN      ] TransactionTest.VerifyWithWrongPublicKey
+Warning: Signature verification failed - invalid signature
+Warning: Transaction signature verification failed
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.VerifyWithWrongPublicKey (0 ms)
+[ RUN      ] TransactionTest.IsValidForSignedTransaction
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.IsValidForSignedTransaction (0 ms)
+[ RUN      ] TransactionTest.IsValidForUnsignedTransaction
+Error: Transaction is not signed
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.IsValidForUnsignedTransaction (0 ms)
+[ RUN      ] TransactionTest.IsValidWithInvalidAmount
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.IsValidWithInvalidAmount (0 ms)
+[ RUN      ] TransactionTest.IsValidWithInvalidAddresses
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.IsValidWithInvalidAddresses (0 ms)
+[ RUN      ] TransactionTest.ValidateAmountMethod
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.ValidateAmountMethod (0 ms)
+[ RUN      ] TransactionTest.ValidateAddressesMethod
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.ValidateAddressesMethod (0 ms)
+[ RUN      ] TransactionTest.ValidateTimingMethod
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.ValidateTimingMethod (0 ms)
+[ RUN      ] TransactionTest.InvolvesAddressMethod
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.InvolvesAddressMethod (0 ms)
+[ RUN      ] TransactionTest.HashConsistency
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.HashConsistency (0 ms)
+[ RUN      ] TransactionTest.HashChangesWithDifferentData
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.HashChangesWithDifferentData (0 ms)
+[ RUN      ] TransactionTest.HashChangesWithDifferentAmount
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.HashChangesWithDifferentAmount (0 ms)
+[ RUN      ] TransactionTest.HashChangesWithDifferentTimestamp
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.HashChangesWithDifferentTimestamp (0 ms)
+[ RUN      ] TransactionTest.StringForHashMethod
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.StringForHashMethod (0 ms)
+[ RUN      ] TransactionTest.CalculateHashUpdatesHash
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.CalculateHashUpdatesHash (0 ms)
+[ RUN      ] TransactionTest.ToStringMethod
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.ToStringMethod (0 ms)
+[ RUN      ] TransactionTest.ToDebugStringMethod
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.ToDebugStringMethod (0 ms)
+[ RUN      ] TransactionTest.PerformanceMultipleTransactions
+[PERFORMANCE] Created 100 transactions in 0ms
+[METRICS] TransactionTest completed - Duration: 0ms
+[METRIC] multiple_transactions_throughput_ops_per_sec: inf
+[METRIC] multiple_transactions_total: 100
+[       OK ] TransactionTest.PerformanceMultipleTransactions (0 ms)
+[ RUN      ] TransactionTest.PerformanceSigningOperations
+[METRICS] TransactionTest completed - Duration: 4ms
+[METRIC] signing_success_rate: 100
+[METRIC] signing_throughput_ops_per_sec: 12500
+[METRIC] total_test_duration_ms: 4
+[       OK ] TransactionTest.PerformanceSigningOperations (5 ms)
+[ RUN      ] TransactionTest.PerformanceValidation
+[METRICS] TransactionTest completed - Duration: 5ms
+[METRIC] total_test_duration_ms: 5
+[METRIC] validation_throughput_ops_per_sec: 20000
+[       OK ] TransactionTest.PerformanceValidation (5 ms)
+[ RUN      ] TransactionTest.IntegrationWithCryptoModules
+[METRICS] TransactionTest completed - Duration: 0ms
+[METRIC] integration_test_ms: 181
+[       OK ] TransactionTest.IntegrationWithCryptoModules (0 ms)
+[ RUN      ] TransactionTest.MultipleSignaturesSameTransaction
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.MultipleSignaturesSameTransaction (0 ms)
+[ RUN      ] TransactionTest.TransactionCopySemantics
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.TransactionCopySemantics (0 ms)
+[ RUN      ] TransactionTest.EdgeCaseAmountValues
+[METRICS] TransactionTest completed - Duration: 0ms
+[       OK ] TransactionTest.EdgeCaseAmountValues (0 ms)
+[ RUN      ] TransactionTest.StressTestMultipleSignedTransactions
+[STRESS_TEST] Processed 20 signed transactions in 0ms
+[METRICS] TransactionTest completed - Duration: 2ms
+[METRIC] stress_test_transaction_count: 20
+[METRIC] stress_test_valid_transactions: 20
+[METRIC] total_test_duration_ms: 2
+[       OK ] TransactionTest.StressTestMultipleSignedTransactions (2 ms)
+[ RUN      ] TransactionTest.ComprehensiveThroughputAndBottleneckAnalysis
+🔍 EJECUTANDO ANÁLISIS COMPLETO DE THROUGHPUT Y CUELOS DE BOTELLA
+Tiempo límite: 3000 ms
+Tiempo | Transacciones | TPS actual | Crear | Firmar | Verificar | Bottleneck
+--------------------------------------------------------------------------------
+   100 ms |           988 |       9880 |    4.5 |   40.5 |      54.4 | Ninguno
+   200 ms |          1810 |       8220 |    5.4 |   47.9 |      65.5 | Ninguno
+   300 ms |          2867 |      10570 |    3.8 |   38.0 |      50.8 | Ninguno
+   400 ms |          3908 |      10410 |    3.9 |   38.7 |      51.4 | Ninguno
+   500 ms |          4946 |      10380 |    3.8 |   38.7 |      51.6 | Ninguno
+   600 ms |          5967 |      10210 |    4.1 |   39.4 |      52.4 | Ninguno
+   700 ms |          6978 |      10110 |    3.5 |   39.6 |      53.7 | Ninguno
+   800 ms |          8034 |      10560 |    3.8 |   38.1 |      50.9 | Ninguno
+   900 ms |          9000 |       9660 |    4.4 |   41.4 |      55.2 | Ninguno
+  1000 ms |         10072 |      10720 |    3.7 |   37.3 |      50.2 | Ninguno
+  1100 ms |         11057 |       9850 |    3.8 |   38.9 |      56.9 | Ninguno
+  1200 ms |         12129 |      10720 |    3.6 |   37.4 |      50.2 | Ninguno
+  1300 ms |         13089 |       9600 |    4.8 |   41.9 |      55.4 | Ninguno
+  1400 ms |         14151 |      10620 |    3.9 |   37.8 |      50.3 | Ninguno
+  1500 ms |         15217 |      10660 |    3.7 |   37.7 |      50.4 | Ninguno
+  1600 ms |         16167 |       9500 |    5.0 |   42.2 |      56.0 | Ninguno
+  1700 ms |         17207 |      10400 |    4.0 |   38.2 |      51.2 | Ninguno
+  1800 ms |         18149 |       9420 |    4.4 |   40.6 |      59.2 | Ninguno
+  1900 ms |         19166 |      10170 |    4.3 |   39.5 |      52.6 | Ninguno
+  2001 ms |         20226 |      10600 |    3.7 |   38.2 |      50.4 | Ninguno
+  2101 ms |         21209 |       9830 |    4.6 |   40.5 |      54.7 | Ninguno
+  2201 ms |         22301 |      10920 |    3.5 |   36.7 |      49.4 | Ninguno
+  2301 ms |         23331 |      10300 |    4.2 |   39.0 |      51.9 | Ninguno
+  2401 ms |         24331 |      10000 |    8.5 |   38.2 |      51.2 | Ninguno
+  2501 ms |         25359 |      10280 |    3.8 |   39.2 |      52.3 | Ninguno
+  2601 ms |         26358 |       9990 |    4.1 |   40.4 |      53.5 | Ninguno
+  2701 ms |         27344 |       9860 |    3.9 |   41.1 |      54.6 | Ninguno
+  2801 ms |         28351 |      10070 |    4.3 |   40.0 |      53.0 | Ninguno
+  2901 ms |         29411 |      10600 |    3.6 |   37.9 |      50.8 | Ninguno
+
+=== ANÁLISIS COMPLETO DE CUELOS DE BOTELLA ===
+Distribución del tiempo por operación:
+  • Creación: 4.2 μs (4.4%)
+  • Firma: 39.5 μs (40.8%)
+  • Verificación: 53.1 μs (54.8%)
+
+🔍 IDENTIFICACIÓN DE CUELOS DE BOTELLA:
+  📊 DISTRIBUCIÓN BALANCEADA con operación dominante
+
+=== EVOLUCIÓN TEMPORAL DEL RENDIMIENTO ===
+Análisis por lotes de 500 transacciones:
+  Lote 1 (TX 0-500):
+    • TPS: 10869.6 | Crear: 3.6 μs | Firmar: 37.1 μs | Verificar: 50.3 μs
+  Lote 2 (TX 500-1000):
+    • TPS: 9803.9 | Crear: 7.8 μs | Firmar: 73.7 μs | Verificar: 97.0 μs
+  Lote 3 (TX 1000-1500):
+    • TPS: 8823.5 | Crear: 6.3 μs | Firmar: 53.7 μs | Verificar: 73.8 μs
+    ⚠️  DEGRADACIÓN: TPS disminuyó 10.0%
+  Lote 4 (TX 1500-2000):
+    • TPS: 9174.3 | Crear: 4.0 μs | Firmar: 37.4 μs | Verificar: 51.7 μs
+  Lote 5 (TX 2000-2500):
+    • TPS: 9434.0 | Crear: 3.8 μs | Firmar: 37.3 μs | Verificar: 50.5 μs
+  Lote 6 (TX 2500-3000):
+    • TPS: 9554.1 | Crear: 4.7 μs | Firmar: 41.8 μs | Verificar: 54.5 μs
+  Lote 7 (TX 3000-3500):
+    • TPS: 9641.9 | Crear: 4.1 μs | Firmar: 39.8 μs | Verificar: 52.7 μs
+  Lote 8 (TX 3500-4000):
+    • TPS: 9803.9 | Crear: 3.1 μs | Firmar: 36.6 μs | Verificar: 45.4 μs
+  Lote 9 (TX 4000-4500):
+    • TPS: 9825.3 | Crear: 3.7 μs | Firmar: 39.5 μs | Verificar: 52.1 μs
+  Lote 10 (TX 4500-5000):
+    • TPS: 9901.0 | Crear: 3.0 μs | Firmar: 36.7 μs | Verificar: 47.9 μs
+  Lote 11 (TX 5000-5500):
+    • TPS: 9927.8 | Crear: 4.0 μs | Firmar: 39.0 μs | Verificar: 52.2 μs
+  Lote 12 (TX 5500-6000):
+    • TPS: 9950.2 | Crear: 3.1 μs | Firmar: 36.6 μs | Verificar: 47.4 μs
+  Lote 13 (TX 6000-6500):
+    • TPS: 10015.4 | Crear: 3.3 μs | Firmar: 36.9 μs | Verificar: 50.0 μs
+  Lote 14 (TX 6500-7000):
+    • TPS: 9971.5 | Crear: 3.3 μs | Firmar: 38.4 μs | Verificar: 50.0 μs
+  Lote 15 (TX 7000-7500):
+    • TPS: 10013.4 | Crear: 3.7 μs | Firmar: 37.5 μs | Verificar: 50.1 μs
+  Lote 16 (TX 7500-8000):
+    • TPS: 10050.3 | Crear: 3.8 μs | Firmar: 37.9 μs | Verificar: 50.6 μs
+  Lote 17 (TX 8000-8500):
+    • TPS: 10011.8 | Crear: 4.5 μs | Firmar: 42.1 μs | Verificar: 56.0 μs
+  Lote 18 (TX 9000-9500):
+    • TPS: 10021.1 | Crear: 4.1 μs | Firmar: 38.6 μs | Verificar: 51.4 μs
+  Lote 19 (TX 9500-10000):
+    • TPS: 10060.4 | Crear: 3.7 μs | Firmar: 37.5 μs | Verificar: 50.4 μs
+  Lote 20 (TX 10000-10500):
+    • TPS: 10086.5 | Crear: 3.6 μs | Firmar: 37.9 μs | Verificar: 50.8 μs
+  Lote 21 (TX 10500-11000):
+    • TPS: 10045.7 | Crear: 3.9 μs | Firmar: 39.0 μs | Verificar: 57.4 μs
+  Lote 22 (TX 11000-11500):
+    • TPS: 10087.7 | Crear: 3.2 μs | Firmar: 35.8 μs | Verificar: 48.6 μs
+  Lote 23 (TX 11500-12000):
+    • TPS: 10101.0 | Crear: 3.6 μs | Firmar: 37.2 μs | Verificar: 50.0 μs
+  Lote 24 (TX 12000-12500):
+    • TPS: 10088.8 | Crear: 4.5 μs | Firmar: 42.0 μs | Verificar: 55.9 μs
+  Lote 25 (TX 12500-13000):
+    • TPS: 10069.7 | Crear: 4.8 μs | Firmar: 42.0 μs | Verificar: 55.5 μs
+  Lote 26 (TX 13000-13500):
+    • TPS: 10067.1 | Crear: 4.6 μs | Firmar: 40.0 μs | Verificar: 53.1 μs
+  Lote 27 (TX 13500-14000):
+    • TPS: 10093.7 | Crear: 4.1 μs | Firmar: 38.0 μs | Verificar: 50.7 μs
+  Lote 28 (TX 14000-14500):
+    • TPS: 10125.7 | Crear: 3.6 μs | Firmar: 37.0 μs | Verificar: 49.5 μs
+  Lote 29 (TX 14500-15000):
+    • TPS: 10135.1 | Crear: 3.7 μs | Firmar: 37.5 μs | Verificar: 50.3 μs
+  Lote 30 (TX 15000-15500):
+    • TPS: 10144.0 | Crear: 4.2 μs | Firmar: 39.1 μs | Verificar: 51.3 μs
+  Lote 31 (TX 15500-16000):
+    • TPS: 10101.0 | Crear: 5.1 μs | Firmar: 43.1 μs | Verificar: 57.1 μs
+  Lote 32 (TX 16000-16500):
+    • TPS: 10097.9 | Crear: 4.2 μs | Firmar: 39.0 μs | Verificar: 51.6 μs
+  Lote 33 (TX 16500-17000):
+    • TPS: 10119.0 | Crear: 3.8 μs | Firmar: 37.9 μs | Verificar: 51.0 μs
+  Lote 34 (TX 17000-17500):
+    • TPS: 10127.3 | Crear: 3.8 μs | Firmar: 38.0 μs | Verificar: 51.4 μs
+  Lote 35 (TX 17500-18000):
+    • TPS: 10089.7 | Crear: 4.3 μs | Firmar: 40.1 μs | Verificar: 59.7 μs
+  Lote 36 (TX 18000-18500):
+    • TPS: 10076.3 | Crear: 4.9 μs | Firmar: 41.0 μs | Verificar: 54.3 μs
+  Lote 37 (TX 18500-19000):
+    • TPS: 10084.9 | Crear: 4.2 μs | Firmar: 39.5 μs | Verificar: 52.7 μs
+  Lote 38 (TX 19000-19500):
+    • TPS: 10087.9 | Crear: 3.9 μs | Firmar: 39.3 μs | Verificar: 51.7 μs
+  Lote 39 (TX 19500-20000):
+    • TPS: 10101.0 | Crear: 3.8 μs | Firmar: 38.5 μs | Verificar: 50.6 μs
+  Lote 40 (TX 20000-20500):
+    • TPS: 10108.5 | Crear: 4.3 μs | Firmar: 40.8 μs | Verificar: 52.5 μs
+  Lote 41 (TX 20500-21000):
+    • TPS: 10091.3 | Crear: 4.8 μs | Firmar: 41.5 μs | Verificar: 56.1 μs
+  Lote 42 (TX 21000-21500):
+    • TPS: 10108.1 | Crear: 3.5 μs | Firmar: 36.6 μs | Verificar: 49.2 μs
+  Lote 43 (TX 21500-22000):
+    • TPS: 10124.3 | Crear: 3.4 μs | Firmar: 36.7 μs | Verificar: 49.3 μs
+  Lote 44 (TX 22000-22500):
+    • TPS: 10139.7 | Crear: 3.3 μs | Firmar: 36.8 μs | Verificar: 47.9 μs
+  Lote 45 (TX 22500-23000):
+    • TPS: 10150.0 | Crear: 3.7 μs | Firmar: 37.5 μs | Verificar: 49.9 μs
+  Lote 46 (TX 23000-23500):
+    • TPS: 10116.2 | Crear: 31.4 μs | Firmar: 41.0 μs | Verificar: 55.0 μs
+  Lote 47 (TX 23500-24000):
+    • TPS: 10130.9 | Crear: 10.7 μs | Firmar: 38.4 μs | Verificar: 51.6 μs
+  Lote 48 (TX 24000-24500):
+    • TPS: 10136.5 | Crear: 3.9 μs | Firmar: 37.7 μs | Verificar: 51.6 μs
+  Lote 49 (TX 24500-25000):
+    • TPS: 10142.0 | Crear: 3.7 μs | Firmar: 38.6 μs | Verificar: 51.6 μs
+  Lote 50 (TX 25000-25500):
+    • TPS: 10135.1 | Crear: 4.8 μs | Firmar: 42.6 μs | Verificar: 56.7 μs
+  Lote 51 (TX 25500-26000):
+    • TPS: 10128.6 | Crear: 4.4 μs | Firmar: 41.6 μs | Verificar: 55.0 μs
+  Lote 52 (TX 26000-26500):
+    • TPS: 10137.7 | Crear: 3.4 μs | Firmar: 38.5 μs | Verificar: 51.6 μs
+  Lote 53 (TX 26500-27000):
+    • TPS: 10123.7 | Crear: 4.0 μs | Firmar: 41.6 μs | Verificar: 55.6 μs
+  Lote 54 (TX 27000-27500):
+    • TPS: 10125.2 | Crear: 3.7 μs | Firmar: 37.0 μs | Verificar: 50.9 μs
+  Lote 55 (TX 27500-28000):
+    • TPS: 10130.2 | Crear: 3.9 μs | Firmar: 38.6 μs | Verificar: 52.1 μs
+  Lote 56 (TX 28000-28500):
+    • TPS: 10124.3 | Crear: 3.4 μs | Firmar: 37.3 μs | Verificar: 49.8 μs
+  Lote 57 (TX 28500-29000):
+    • TPS: 10132.8 | Crear: 3.6 μs | Firmar: 37.9 μs | Verificar: 50.5 μs
+  Lote 58 (TX 29000-29500):
+    • TPS: 10137.5 | Crear: 4.4 μs | Firmar: 39.6 μs | Verificar: 51.2 μs
+  Lote 59 (TX 29500-30000):
+    • TPS: 10131.7 | Crear: 13.0 μs | Firmar: 37.4 μs | Verificar: 49.6 μs
+
+=== RESULTADOS FINALES ===
+Tiempo total de ejecución: 3000 ms
+Transacciones procesadas: 30402
+Throughput promedio: 10134.0 TX/segundo
+Tiempo promedio por transacción: 98 μs
+Tamaño del vector: 30402 (verificación)
+
+--- Análisis de Consistencia ---
+TPS mínimo: 8220.0 TX/s
+TPS máximo: 10920.0 TX/s
+Variación: ±26.6%
+
+=== RESUMEN EJECUTIVO ===
+🎯 Throughput alcanzado: 10134.0 TX/segundo
+📊 Transacciones en 3000ms: 30402
+⚡ Eficiencia: 100.0% del potencial
+
+✅ Test completado: 30402 transacciones en 3000 ms (10134.0 TX/segundo)
+💡 RECOMENDACIÓN: Rendimiento óptimo alcanzado
+[METRICS] TransactionTest completed - Duration: 3007ms
+[METRIC] throughput_analysis_avg_create_us: 4.2
+[METRIC] throughput_analysis_avg_sign_us: 39.5
+[METRIC] throughput_analysis_avg_verify_us: 53.1
+[METRIC] throughput_analysis_final_tps: 10134.0
+[METRIC] throughput_analysis_total_time_ms: 3000.0
+[METRIC] throughput_analysis_total_tx: 30402.0
+[METRIC] total_test_duration_ms: 3007.0
+[       OK ] TransactionTest.ComprehensiveThroughputAndBottleneckAnalysis (3009 ms)
+[----------] 42 tests from TransactionTest (3045 ms total)
+
+[----------] Global test environment tear-down
+[==========] 42 tests from 1 test suite ran. (3046 ms total)
+[  PASSED  ] 42 tests.
+
+Todos los tests pasaron correctamente!

@@ -1,4 +1,3 @@
-#pragma once
 #ifndef P2P_PEER_MANAGER_HPP
 #define P2P_PEER_MANAGER_HPP
 
@@ -9,99 +8,102 @@
 #include <fstream>
 #include <algorithm>
 #include <iostream>
-
-using namespace std;
+#include <chrono>
+#include <cstdint>
 
 namespace p2p {
 
     struct PeerInfo {
-        string host;   // ip o hostname
+        std::string host;   // ip o hostname
         uint16_t port = 0;
-        string nodeId; // opcional
-        chrono::system_clock::time_point lastSeen = chrono::system_clock::now();
+        std::string nodeId; // opcional
+        std::chrono::system_clock::time_point lastSeen = std::chrono::system_clock::now();
         int score = 0;
+        uint32_t failedAttempts = 0;
+        bool isBootstrap = false;
 
-        string key() const {
-            return host + ":" + to_string(port);
+        std::string key() const {
+            return host + ":" + std::to_string(port);
+        }
+
+        bool isValid() const {
+            return !host.empty() && port > 0 && port <= 65535;
         }
     };
 
     class PeerManager {
         public:
-            
             PeerManager() = default;
-
             ~PeerManager() = default;
 
             /**
-             * The `addKnownPeer` function adds a `PeerInfo` object to a map of known peers in a thread-safe
-             * manner.
-             * 
-             * @param p The parameter `p` in the `addKnownPeer` function is of type `const PeerInfo&`, which
-             * means it is a constant reference to an object of type `PeerInfo`.
+             * Adds a known peer to the manager in a thread-safe manner.
              */
             void addKnownPeer(const PeerInfo& p);
             
             /**
-             * The function `getKnownPeers` returns a vector of `PeerInfo` objects containing information about
-             * known peers, while ensuring thread safety using a mutex.
-             * 
-             * @return The `getKnownPeers` function returns a vector of `PeerInfo` objects containing
-             * information about known peers.
+             * Removes a peer from the manager by key.
              */
-            vector<PeerInfo> getKnownPeers() const;
+            bool removePeer(const std::string& peerKey);
+            
+            /**
+             * Returns a vector of PeerInfo objects containing information about known peers.
+             */
+            std::vector<PeerInfo> getKnownPeers() const;
 
             /**
-             * The markSeen function updates the lastSeen timestamp and score of a peer in a PeerManager
-             * object, or adds a new peer if it does not already exist.
-             * 
-             * @param p The parameter `p` is of type `const PeerInfo&`, which means it is a constant reference
-             * to an object of the `PeerInfo` class.
+             * Updates the lastSeen timestamp and score of a peer, or adds a new peer if it doesn't exist.
              */
             void markSeen(const PeerInfo& p);
             
             /**
-             * The function `selectPeersToConnect` in the `PeerManager` class selects a specified number of
-             * peers to connect based on their score and last seen timestamp.
-             * 
-             * @param maxCount The `maxCount` parameter in the `selectPeersToConnect` function represents the
-             * maximum number of peers that should be selected for connection. This function selects a list of
-             * peers based on certain criteria and returns a vector of `PeerInfo` objects containing
-             * information about these selected peers, with the number
-             * 
-             * @return A vector of PeerInfo objects containing a selection of peers to connect to, based on the
-             * specified maximum count and sorting criteria.
+             * Marks a peer connection attempt as failed and updates its score.
              */
-            vector<PeerInfo> selectPeersToConnect(size_t maxCount) const;
+            void markFailed(const std::string& peerKey);
+            
+            /**
+             * Selects a specified number of peers to connect based on their score and last seen timestamp.
+             */
+            std::vector<PeerInfo> selectPeersToConnect(size_t maxCount) const;
 
             /**
-             * The `persist` function in the `PeerManager` class writes peer information to a file specified by
-             * the `filename` parameter.
-             * 
-             * @param filename The `filename` parameter is a constant reference to a `string` which represents
-             * the name of the file where the peer information will be persisted.
-             * 
-             * @return The `persist` method returns a boolean value. It returns `true` if the operation of
-             * writing the peer information to the specified file is successful, and `false` if there was an
-             * issue opening the file for writing.
+             * Gets a peer by its key, returns nullptr if not found.
              */
-            bool persist(const string& filename) const;
+            const PeerInfo* getPeer(const std::string& peerKey) const;
 
             /**
-             * The `loadFromDisk` function reads peer information from a file and stores it in a map.
-             * 
-             * @param filename The `filename` parameter is a `const string&` type, which represents the name of
-             * the file from which the `PeerManager` class is supposed to load data.
-             * 
-             * @return The `loadFromDisk` function returns a boolean value. It returns `true` if the file
-             * specified by the `filename` parameter was successfully loaded and processed, and it returns
-             * `false` if there was an issue opening the file or reading its contents.
+             * Cleans up old peers that haven't been seen for a specified duration.
              */
-            bool loadFromDisk(const string& filename);
+            size_t cleanupOldPeers(const std::chrono::hours& maxAge);
+
+            /**
+             * Persists peer information to a file.
+             */
+            bool persist(const std::string& filename) const;
+
+            /**
+             * Loads peer information from a file.
+             */
+            bool loadFromDisk(const std::string& filename);
+
+            /**
+             * Returns the number of known peers.
+             */
+            size_t size() const;
+
+            /**
+             * Clears all peers from the manager.
+             */
+            void clear();
 
         private:
-            mutable mutex mtx;
-            unordered_map<string, PeerInfo> peers; // key = host:port
+            mutable std::mutex mtx;
+            std::unordered_map<std::string, PeerInfo> peers; // key = host:port
+            
+            // Constants for peer scoring
+            static const int SCORE_INCREMENT = 1;
+            static const int SCORE_DECREMENT = 5;
+            static const int MAX_FAILED_ATTEMPTS = 3;
     };
 
 } // namespace p2p

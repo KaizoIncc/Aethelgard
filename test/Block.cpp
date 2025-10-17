@@ -1,46 +1,70 @@
 #include "Block.hpp"
 
-Block::Block() : header(0, "") {};
+Block::Block() : header(0, std::vector<uint8_t>(SHA256_HASH_SIZE, 0)) {}
 
-Block::Block(int64_t index, const string& previousHash) : header(index, previousHash) {
+Block::Block(int64_t index, const std::vector<uint8_t>& previousHash) 
+    : header(index, previousHash) {
+    
+    // Validación de parámetros
+    if (index < 0) {
+        throw std::invalid_argument("Block index cannot be negative");
+    }
+    
     // Inicializamos Merkle root vacío para un bloque recién creado
     header.setMerkleRoot(calculateMerkleRoot());
 
     // Calculamos el hash inicial del header
-    header.setHash(calculateHash(header.toString()));
+    header.setHash(calculateBlockHash());
 }
 
 bool Block::addTransaction(const Transaction& transaction) {
-    if (!transaction.isValid()) return false;
+    if (!transaction.isValid()) {
+        std::cerr << "Error: Cannot add invalid transaction to block" << std::endl;
+        return false;
+    }
+    
+    if (!hasSpaceForTransaction(transaction)) {
+        std::cerr << "Error: Block has no space for additional transaction" << std::endl;
+        return false;
+    }
+    
     transactions.push_back(transaction);
     
     // Recalcular Merkle root y hash del bloque
-    string merkle = calculateMerkleRoot();
-    header.setMerkleRoot(merkle);
-    string h = calculateHash(header.toString());
-    header.setHash(h);
+    updateBlockHash();
     
     return true;
 }
 
-string Block::calculateMerkleRoot() const {
-    if (transactions.empty()) return calculateHash(""); // Hash vacío para bloques sin transacciones
+std::vector<uint8_t> Block::calculateMerkleRoot() const {
+    if (transactions.empty()) {
+        // Hash de datos vacíos para bloques sin transacciones
+        return calculateHash(std::vector<uint8_t>());
+    }
     
-    vector<string> hashes;
+    std::vector<std::vector<uint8_t>> hashes;
     for (const auto& tx : transactions) { 
         hashes.push_back(tx.getHash()); 
     }
     
     // Algoritmo simple de merkle tree
     while (hashes.size() > 1) {
-        vector<string> newHashes;
+        std::vector<std::vector<uint8_t>> newHashes;
         
         for (size_t i = 0; i < hashes.size(); i += 2) {
+            std::vector<uint8_t> combined;
+            
             if (i + 1 < hashes.size()) {
-                newHashes.push_back(calculateHash(hashes[i] + hashes[i + 1]));
+                // Combinar dos hashes
+                combined.insert(combined.end(), hashes[i].begin(), hashes[i].end());
+                combined.insert(combined.end(), hashes[i + 1].begin(), hashes[i + 1].end());
             } else {
-                newHashes.push_back(calculateHash(hashes[i] + hashes[i]));
+                // Duplicar el último hash si el número es impar
+                combined.insert(combined.end(), hashes[i].begin(), hashes[i].end());
+                combined.insert(combined.end(), hashes[i].begin(), hashes[i].end());
             }
+            
+            newHashes.push_back(calculateHash(combined));
         }
         
         hashes = newHashes;
@@ -49,12 +73,14 @@ string Block::calculateMerkleRoot() const {
     return hashes[0];
 }
 
-string Block::calculateBlockHash() {
+std::vector<uint8_t> Block::calculateBlockHash() {
     // Calcular merkle root primero
-    header.setMerkleRoot(calculateMerkleRoot());
+    std::vector<uint8_t> merkleRoot = calculateMerkleRoot();
+    header.setMerkleRoot(merkleRoot);
     
-    // Calcular hash del header
-    string blockHash = calculateHash(header.toString());
+    // Calcular hash del header serializado
+    std::vector<uint8_t> headerBytes = header.toBytes();
+    std::vector<uint8_t> blockHash = calculateHash(headerBytes);
     header.setHash(blockHash);
     
     return blockHash;
@@ -62,41 +88,119 @@ string Block::calculateBlockHash() {
 
 bool Block::isValid() const {
     // Verificar hash del header
-    string calculatedHash = calculateHash(header.toString());
-    if (calculatedHash != header.getHash()) return false;
+    std::vector<uint8_t> headerBytes = header.toBytes();
+    std::vector<uint8_t> calculatedHash = calculateHash(headerBytes);
+    if (calculatedHash != header.getHash()) {
+        std::cerr << "Error: Block header hash mismatch" << std::endl;
+        return false;
+    }
     
     // Verificar merkle root
-    if (calculateMerkleRoot() != header.getMerkleRoot()) return false;
+    std::vector<uint8_t> calculatedMerkleRoot = calculateMerkleRoot();
+    if (calculatedMerkleRoot != header.getMerkleRoot()) {
+        std::cerr << "Error: Block merkle root mismatch" << std::endl;
+        return false;
+    }
     
     // Verificar transacciones
     for (const auto& tx : transactions) { 
-        if (!tx.isValid()) return false; 
+        if (!tx.isValid()) {
+            std::cerr << "Error: Block contains invalid transaction" << std::endl;
+            return false; 
+        }
     }
     
-    // Verificar que el previousHash no esté vacío (excepto para el genesis block)
-    if (header.getIndex() > 0 && header.getPreviousHash().empty()) return false;
+    // Verificar límites de tamaño
+    if (transactions.size() > MAX_TRANSACTIONS) {
+        std::cerr << "Error: Block exceeds maximum transaction count" << std::endl;
+        return false;
+    }
+    
+    if (getEstimatedSize() > MAX_BLOCK_SIZE) {
+        std::cerr << "Error: Block exceeds maximum size" << std::endl;
+        return false;
+    }
+    
+    // Verificar que el previousHash sea válido (excepto para el genesis block)
+    if (header.getIndex() > 0) {
+        std::vector<uint8_t> previousHash = header.getPreviousHash();
+        if (previousHash.empty() || 
+            std::all_of(previousHash.begin(), previousHash.end(), [](uint8_t b) { return b == 0; })) {
+            std::cerr << "Error: Invalid previous hash for non-genesis block" << std::endl;
+            return false;
+        }
+    }
     
     return true;
 }
 
-BlockHeader Block::getHeader() const { return header; }
-vector<Transaction> Block::getTransactions() const { return transactions; }
-int64_t Block::getTransactionCount() const { return transactions.size(); }
+// Getters
+BlockHeader Block::getHeader() const { 
+    return header; 
+}
 
-string Block::calculateHash(const string& data) const {
-    // ¡VERSIÓN ACTUALIZADA CON LIBSODIUM!
-    vector<uint8_t> hash(crypto_hash_sha256_BYTES); // 32 bytes
+std::vector<Transaction> Block::getTransactions() const { 
+    return transactions; 
+}
+
+int64_t Block::getTransactionCount() const { 
+    return static_cast<int64_t>(transactions.size()); 
+}
+
+size_t Block::getEstimatedSize() const {
+    // Estimación simple del tamaño del bloque
+    size_t size = header.toBytes().size(); // Tamaño del header
     
-    // Calcular hash SHA-256 con libsodium
-    crypto_hash_sha256(hash.data(), 
-                      reinterpret_cast<const unsigned char*>(data.c_str()), 
-                      data.size());
-    
-    // Convertir a hexadecimal
-    stringstream ss;
-    for (uint8_t byte : hash) {
-        ss << hex << setw(2) << setfill('0') << static_cast<int>(byte);
+    for (const auto& tx : transactions) {
+        // Estimación del tamaño de transacción (hash + direcciones + amount + timestamp)
+        size += 32 + 40 + 40 + 8 + 8 + 8; // Valores conservadores
     }
     
-    return ss.str();
+    return size;
+}
+
+// Setters para reconstrucción
+void Block::setHeader(const BlockHeader& newHeader) {
+    header = newHeader;
+}
+
+void Block::setTransactions(const std::vector<Transaction>& newTransactions) {
+    transactions = newTransactions;
+    updateBlockHash();
+}
+
+std::vector<uint8_t> Block::calculateHash(const std::vector<uint8_t>& data) const {
+    std::vector<uint8_t> hash(crypto_hash_sha256_BYTES); // 32 bytes
+    
+    if (data.empty()) {
+        // Hash de datos vacíos
+        crypto_hash_sha256(hash.data(), nullptr, 0);
+    } else {
+        // Calcular hash SHA-256 con libsodium
+        crypto_hash_sha256(hash.data(), data.data(), data.size());
+    }
+    
+    return hash;
+}
+
+// Helpers privados
+bool Block::hasSpaceForTransaction(const Transaction& transaction) const {
+    // Verificar límite de transacciones
+    if (transactions.size() >= MAX_TRANSACTIONS) {
+        return false;
+    }
+    
+    // Estimación conservadora del tamaño de la transacción
+    size_t transactionSize = 200; // Estimación conservadora en bytes
+    
+    // Verificar límite de tamaño de bloque
+    if (getEstimatedSize() + transactionSize > MAX_BLOCK_SIZE) {
+        return false;
+    }
+    
+    return true;
+}
+
+void Block::updateBlockHash() {
+    calculateBlockHash();
 }
